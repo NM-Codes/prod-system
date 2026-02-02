@@ -1,0 +1,85 @@
+/* sida */
+.history-page {
+  background-color: var(--color-bg);
+  padding: var(--space-xl);
+  min-height: 100vh;
+  border-radius: var(--radius-md);
+}
+
+/* lista */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* cards */
+.history-card {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* info */
+.history-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text);
+}
+
+.history-meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.history-info {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-md);
+}
+
+.history-info strong {
+  color: var(--color-accent);
+}
+
+/* redigera och ta bort knappar */
+.history-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+/* edit läge */
+.history-edit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.history-input,
+.history-select, .history-energy {
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid #d1d5db;
+  font-size: var(--font-size-base);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+}
+
+.history-input:focus,
+.history-select:focus,
+.history-energy:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* footer: energi och spara avbryt knappar*/
+.history-edit-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}

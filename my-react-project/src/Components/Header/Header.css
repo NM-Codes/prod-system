@@ -1,0 +1,44 @@
+header {
+  background-color: var(--color-bg-surface);
+  padding: var(--space-md);
+
+  /* Headern stannar kvar även vid scroll */
+  position: sticky;
+  top: 0;
+}
+
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: var(--space-sm);
+  text-align: start;
+  height: 40px;
+  transition: color 0.2s ease;
+  color: var(--color-text-muted);
+}
+
+li:hover {
+  cursor: pointer;
+}
+
+li.active {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.icon {
+  margin-right: var(--space-md);
+}
+
+/*Den vägrade centrera sig med bara .icon*/
+.icon svg {
+  transform: translateY(2px);
+  color: var(--color-accent);
+}

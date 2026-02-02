@@ -1,0 +1,114 @@
+
+.worksession-container{
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+
+.worksession-title {
+  text-align: left;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #0f0f0f;
+}
+.worksession-form{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;    
+}
+
+
+/* FORMULÄRFÄLT */
+
+.worksession-form{
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.form-row{
+  display: flex;
+  gap: 1.5rem;
+}
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+
+.worksession-input-label{
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
+}
+.worksession-input,
+.worksession-select{
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  color: #374151;
+  width: 100%;
+  box-sizing: border-box;
+}
+.worksession-input:focus,
+.worksession-select:focus{
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.form-actions{
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* KNAPPAR */
+
+.worksession-button{
+  flex: 5;
+  padding: 0.85rem;
+  background-color: #5b42f3;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.worksession-button:hover{
+  opacity: 0.9;
+}
+.worksession-reset-btn{
+  flex: 1;
+  padding: 0.85rem;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.worksession-reset-btn:hover {
+  background-color: #e5e7eb;
+}
+
+/* RESPONSIVT (MOBIL) */
+
+@media (max-width: 600px) {
+  .form-row {
+      flex-direction: column;
+      gap: 1.2rem;
+  }
+}
