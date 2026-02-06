@@ -1,127 +1,76 @@
-export default function WorkSession() {
-  const [title, setTitle] = useState(" ");
-  const [category, setCategory] = useState("Välj kategori");
-  const [sessionType, setSessionType] = useState ("Deep work");
-  const [date, setDate] = useState("2026-01-19");
-  const [startTime, setStartTime] = useState ("");
-  const [endTime, setEndTime] = useState ("");
-  
-  /* Lägga till priortering, hög (röd), medel (orange), låg (grön)*/
-  /*Sektion för sparade arbetssektioner */
+import { useState } from "react";
+import EnergyLogger from "../EnergyLogger/EnergyLogger";
 
-  function handleSubmit(e){
+/*
+  WorkSession
+  ------------
+  Formulär för att skapa EN session
+  - Kan komma från Timer (auto-fylld tid)
+  - Kan användas manuellt (failsafe)
+*/
+
+export default function WorkSession({ initialSession, onSave }) {
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("Välj kategori");
+  const [sessionType, setSessionType] = useState("Deep work");
+
+  // Initieras från Timer om data finns
+  const [date, setDate] = useState(initialSession?.date ?? "");
+  const [startTime, setStartTime] = useState(initialSession?.startTime ?? "");
+  const [endTime, setEndTime] = useState(initialSession?.endTime ?? "");
+  const [energyLevel, setEnergyLevel] = useState(0);
+
+  function handleSubmit(e) {
     e.preventDefault();
-    
-    const newWorkSession = {
+
+    onSave({
       id: crypto.randomUUID(),
+      title,
+      category,
+      sessionType,
       date,
       startTime,
       endTime,
-      title,
-      sessionType,
-      category,
-        
-        
-    };
-
-    
-
-    console.log("Nytt arbetspass:", newWorkSession);
+      energyLevel,
+    });
   }
 
-  return(
+  return (
     <div className="worksession-container">
+      <h2>Ny arbetssession</h2>
 
-      {/* -------- SEKTIONSEN FÖR ATT LÄGGA TILL ARBETSSEKTION ------- */}
-      <h2 className="worksession-title">Ny arbetssession</h2>
+      <EnergyLogger onLevelSelect={setEnergyLevel} />
 
-      <form className="worksession-form" onSubmit={handleSubmit}>
-        
-        <div className="form-group">
-          <label className="worksession-input-label">Titel *</label>
-          <input className="worksession-input"
-              type="text"
-              placeholder="T.ex. Kodsprint på feature X"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-          />
-        </div>
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Titel"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
 
-        
-        <div className="form-row">
-            <div className="form-group">
-              <label className="worksession-input-label">Kategori</label>
-              <select className="worksession-select"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option>Arbete</option>
-                <option>Personligt</option>
-                <option>Lärande</option>
-                <option>Övrigt</option>
-              </select>
-            </div>
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option disabled>Välj kategori</option>
+          <option>Arbete</option>
+          <option>Personligt</option>
+          <option>Lärande</option>
+          <option>Övrigt</option>
+        </select>
 
-            <div className="form-group">
-              <label className="worksession-input-label">Sessiontyp</label>
-              <select className="worksession-select"
-                value={sessionType}
-                onChange={(e) => setSessionType(e.target.value)}
-              >
-                <option>🎯 Deep Work</option>
-                <option>👥 Möte</option>
-                <option>📋 Planering</option>   
-                <option>📚 Lärande</option>   
-                <option>☕ Paus</option>   
-                <option>📌 Övrigt</option>   
-              </select>
-            </div>
-        </div>
+        <select value={sessionType} onChange={(e) => setSessionType(e.target.value)}>
+          <option>🎯 Deep Work</option>
+          <option>👥 Möte</option>
+          <option>📋 Planering</option>
+          <option>📚 Lärande</option>
+          <option>☕ Paus</option>
+          <option>📌 Övrigt</option>
+        </select>
 
-        
-        <div className="form-group">
-          <label className="worksession-input-label">Datum *</label>
-          <input className="worksession-input"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required 
-          />
-        </div>
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        <input type="time" step="1" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+        <input type="time" step="1" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
 
-        
-        <div className="form-row">
-            <div className="form-group">
-              <label className="worksession-input-label">Starttid *</label>
-              <input className="worksession-input"
-                type="time"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                required 
-              />
-            </div>
-            <div className="form-group">
-              <label className="worksession-input-label">Sluttid *</label>
-              <input className="worksession-input"
-                type="time"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-                required
-              />
-            </div>
-        </div>
-
-        {/* -------- KNAPPAR FÖR SPARA ELLER AVBRYTA ------- */}
-
-        <div className="form-actions">
-          <button className="worksession-button" type="submit">
-            Spara session
-          </button>
-          <button className="worksession-reset-btn" type="reset">
-            Avbryt
-          </button>
-        </div>
+        <button type="submit">Spara session</button>
       </form>
     </div>
   );

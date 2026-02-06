@@ -1,51 +1,93 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Timer.module.css";
 
-function Timer() {
-  const [milliseconds, setMilliseconds] = useState(0);
-  const [timerToggle, setTimerToggle] = useState(false);
+/*
+  Timer ansvarar ENBART för:
+  - tidräkning
+  - start / stop / reset
+  - export av start + stop tid via onStop
+*/
 
-  // using live ms to create the different times
+function Timer({ onStop }) {
+  const [milliseconds, setMilliseconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+
+  //useRef används för att överleva re-renders
+  const intervalRef = useRef(null);
+  const startTimestampRef = useRef(null);
+
+  //Omvandlar ms till format hh:mm:ss
   const time = {
     hours: Math.floor(milliseconds / 3600000),
-    minutes: Math.floor(milliseconds / 60000)%60,
-    seconds: Math.floor(milliseconds / 1000)%60, // 10*10
-    milliseconds: milliseconds
+    minutes: Math.floor(milliseconds / 60000) % 60,
+    seconds: Math.floor(milliseconds / 1000) % 60,
+  };
+
+  //START
+  function handleStart() {
+    if (isRunning) return; //skydd mot dubbel-start
+
+    if (!startTimestampRef.current) {
+      startTimestampRef.current = new Date();
+    }
+
+    setIsRunning(true);
   }
 
-  // full reset
-  const resetTimer = () => {
-    setTimerToggle(false)
-    setMilliseconds(0)
+  //STOP
+  function handleStop() {
+    if (!isRunning) return;
+
+    setIsRunning(false);
+
+    const endTimestamp = new Date();
+    const startTimestamp = startTimestampRef.current;
+
+    if (!startTimestamp) return;
+
+    onStop({
+      date: startTimestamp.toISOString().split("T")[0],
+      startTime: startTimestamp.toLocaleTimeString("sv-SE"),
+      endTime: endTimestamp.toLocaleTimeString("sv-SE"),
+    });
   }
 
-  // TOGGLE TIMER
+  //RESET
+  function handleReset() {
+    setIsRunning(false);
+    setMilliseconds(0);
+    startTimestampRef.current = null;
+  }
+
+  //Logik för timer räkningen
   useEffect(() => {
+    if (!isRunning) {
+      clearInterval(intervalRef.current);
+      return;
+    }
 
-    if (timerToggle === true) {
-      //every "interval" gets an id when using SetInterval
-      const intervalId = setInterval(() => {
-        setMilliseconds(prev => prev + 100);
-      }, 100) // updating every 1ms made it slow, so 100ms instead
+    intervalRef.current = setInterval(() => {
+      setMilliseconds((prev) => prev + 1000);
+    }, 1000);
 
-      // removes the previous interval, so only 1 interval runs
-      return () => {
-        clearInterval(intervalId)
-      }
-    } 
-
-  }, [timerToggle])
+    return () => clearInterval(intervalRef.current);
+  }, [isRunning]);
 
   return (
-    <>
-      <div className="time-display">{`${time.hours}h : ${time.minutes}min : ${time.seconds}s`}</div>
-      <div className={styles.buttons}>
-        <button onClick={() => setTimerToggle(true)}>Start</button>
-        <button onClick={() => setTimerToggle(false)}>Stop</button>
-        <button onClick={resetTimer}>Reset</button>
+    <div className={styles.timer}>
+      <div className="time-display">
+        {String(time.hours).padStart(2, "0")}:
+        {String(time.minutes).padStart(2, "0")}:
+        {String(time.seconds).padStart(2, "0")}
       </div>
-    </>
-  )
+
+      <div className={styles.buttons}>
+        <button onClick={handleStart}>Start</button>
+        <button onClick={handleStop}>Stop</button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+    </div>
+  );
 }
 
 export default Timer;
