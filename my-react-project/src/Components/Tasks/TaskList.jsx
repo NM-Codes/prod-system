@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./Todo.css";
+import "./TaskList.css";
 
-function Todo() {
+function Tasks() {
 
   //useState körs med en funktion som bara körs VID FÖRSTA rendern
   //Detta används för att läsa från localStorage en gång
@@ -36,7 +36,7 @@ function Todo() {
 
   //Lägg yill todo
   function addTodo() {
-    //trim() tar bort mellanslag = stoppar tomma todos
+    //trim() tar bort mellanslag och stoppar tomma todos
     if (!text.trim()) return;
 
     //Uppdatera todos baserat på föregående värde
@@ -93,7 +93,7 @@ function Todo() {
   return (
     <div className="todo">
       <div className="todo-inner">
-        <h2>To Do</h2>
+        <h2>Task List</h2>
 
         {/* Input för att lägga till ny todo */}
         <input
@@ -105,13 +105,13 @@ function Todo() {
 
         <button onClick={addTodo}>Lägg till</button>
 
-        {/* Lista över todos */}
+        {/* Visar lista över todos */}
         <div className="todo-list">
           {todos.map((todo) => (
             <div key={todo.id} className="todo-item">
               {editingId === todo.id ? (
                 <div className="todo-edit">
-                  {/* Edit-läge */}
+                  {/* Edit-läge med spara och avbryt knappar */}
                   <input
                     className="todo-input"
                     value={draft}
@@ -125,7 +125,7 @@ function Todo() {
                 </div>
               ) : (
                 <>
-                  {/* Visningsläge */}
+                  {/* Visningsläge med redigera och ta bort knappar */}
                   <span>{todo.text}</span>
 
                   <div className="todo-actions">
@@ -142,4 +142,4 @@ function Todo() {
   );
 }
 
-export default Todo;
+export default Tasks;
