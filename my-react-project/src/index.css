@@ -46,7 +46,7 @@
 }
 
 body {
-  background-color: var(--color-bg);
+  /* background-color: var(--color-bg); */
   margin: 0;
 }
 
@@ -67,4 +67,26 @@ main {
   flex-direction: column;
   align-items: center;
   height: 100%;
+}
+
+/* theme dark mode and light mode */
+.theme-toggle-dark
+{
+    height: '100vh';
+    margin: 0;
+    padding: '2rem';
+    background:linear-gradient(135deg, #151b2a 0%, #1d1b49 100%);
+    
+    color:#fff;
+    transition: 'backgroundColor 0.3s ease';
+
+}
+.theme-toggle-light
+{
+    height: '100vh';
+    margin: 0;
+    padding: '2rem';
+    background:linear-gradient(135deg, #f2f5ff 0%, #faf6fe 100%);
+    color:#000;
+    transition: 'backgroundColor 0.3s ease';
 }

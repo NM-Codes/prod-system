@@ -1,5 +1,5 @@
 header {
-  background-color: var(--color-bg-surface);
+  /* background-color: var(--color-bg-surface); */
   padding: var(--space-md);
 
   /* Headern stannar kvar även vid scroll */
@@ -29,7 +29,7 @@ li:hover {
 }
 
 li.active {
-  color: var(--color-text);
+  color: var(--color-accent);
   font-weight: 500;
 }
 

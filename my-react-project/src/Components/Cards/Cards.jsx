@@ -1,5 +1,6 @@
 import React from 'react'
 import './Cards.css'
+import { useTheme } from '../../Contexts/ThemeContext';
 
 // Card component with dark and light mode support
 const Card = ({ title, children, icon}) => {
