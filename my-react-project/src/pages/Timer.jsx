@@ -1,9 +1,7 @@
-function Timer() {
-  return(
-    <div className="main-container">
+import Timer from "../Components/Timer/Timer";
 
-    </div>
-  )
+function TimerPage({ onStop }) {
+  return <Timer onStop={onStop} />;
 }
 
-export default Timer
+export default TimerPage;

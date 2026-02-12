@@ -1,9 +1,11 @@
-function Tasks() {
-  return(
-    <div className="main-container">
+import TaskList from "../Components/Tasks/TaskList";
 
+function Tasks() {
+  return (
+    <div className="main-container">
+      <TaskList />
     </div>
-  )
+  );
 }
 
-export default Tasks
+export default Tasks;

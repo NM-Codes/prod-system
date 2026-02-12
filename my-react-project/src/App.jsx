@@ -1,45 +1,83 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
+import './App.css';
+import Header from './components/Header/Header';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
+import Tasks from "./pages/Tasks";
+import TimerPage from "./pages/Timer";
+import WorkSession from "./Components/WorkSession/WorkSession";
+import HistoryPage from "./pages/History";
 import { useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
-import './App.css'
 import './index.css'
-import Header from './components/Header/Header'
-import Home from './pages/Home'
-import Dashboard from './pages/Dashboard'
-import Tasks from  "./pages/Tasks"
-import Timer from "./pages/Timer"
-import HistoryPage from "./pages/History"
 
-
-//Mappar sidnamn till komponenter för dynamisk rendering
-const pages = {
-  Home: <Home />,
-  Dashboard: <Dashboard />,
-  Tasks: <Tasks />,
-  Timer: <Timer />,
-  History: <HistoryPage />
-}
 
 function App() {
-  const [ activePage, setActivePage ] = useState("Home");
-    const { theme } = useTheme();
-    const themeChange = theme === 'light'? 'theme-toggle-dark' : 'theme-toggle-light';
+  const [activePage, setActivePage] = useState("Home");
+  const [sessions, setSessions] = useState(() => {
+    const saved = localStorage.getItem("sessions");
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [draftSession, setDraftSession] = useState(null);
+  
+  const { theme } = useTheme();
+  const themeChange = theme === 'light'? 'theme-toggle-dark' : 'theme-toggle-light';
 
+  useEffect(() => {
+    localStorage.setItem("sessions", JSON.stringify(sessions));
+  }, [sessions]);
 
-  return(
-    <div className={`body-container ${themeChange}`}>
+  function handleEdit(id, updatedData) {
+    setSessions(prev =>
+      prev.map(s => s.id === id ? { ...s, ...updatedData } : s)
+    );
+  }
+
+  function handleDelete(id) {
+    setSessions(prev => prev.filter(s => s.id !== id));
+  }
+
+  return (
+      <div className={`body-container ${themeChange}`}>
       {/* toggle theme color */}
-      <ThemeToggle />
+      <ThemeToggle />      
+      <Header changePage={setActivePage} activePage={activePage} />
 
-      {/* Header tar emot funktionen för att byta sida samt nuvarande status */}
-      <Header changePage={setActivePage} activePage={activePage}/>
-      
       <main>
-        {/* Renderar den sida som matchar nuvarande state */}
-        {pages[activePage]}
+        {activePage === "Home" && <Home />}
+        {activePage === "Dashboard" && <Dashboard />}
+        {activePage === "Tasks" && <Tasks />}
+
+        {activePage === "Timer" && (
+          <TimerPage
+            onStop={(data) => {
+              setDraftSession(data);
+              setActivePage("Session");
+            }}
+          />
+        )}
+
+        {activePage === "Session" && (
+          <WorkSession
+            initialSession={draftSession}
+            onSave={(session) => {
+              setSessions(prev => [...prev, session]);
+              setDraftSession(null);
+              setActivePage("History");
+            }}
+          />
+        )}
+
+        {activePage === "History" && (
+          <HistoryPage
+            sessions={sessions}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        )}
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,11 +1,15 @@
-import History from "../components/History/History"
+import History from "../Components/History/History";
 
-function HistoryPage() {
-  return(
+function HistoryPage({ sessions, onEdit, onDelete }) {
+  return (
     <div className="main-container">
-      < History />
+      <History
+        sessions={sessions}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
     </div>
-  )
+  );
 }
 
-export default HistoryPage
+export default HistoryPage;
