@@ -1,6 +1,7 @@
 import GridContainer from "../components/GridContainer/GridContainer"
 import Card from "../components/Cards/Cards"
 
+
 function Home() {
   return(
     <div className="main-container">
