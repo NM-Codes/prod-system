@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import Header from './components/Header/Header';
-import Home from './pages/Home';
+import Header from './Components/Header/Header';
 import Dashboard from './pages/Dashboard';
-import Tasks from "./pages/Tasks";
 import TimerPage from "./pages/Timer";
 import WorkSession from "./Components/WorkSession/WorkSession";
 import HistoryPage from "./pages/History";
@@ -13,7 +11,7 @@ import './index.css'
 
 
 function App() {
-  const [activePage, setActivePage] = useState("Home");
+  const [activePage, setActivePage] = useState("Dashboard");
   const [sessions, setSessions] = useState(() => {
     const saved = localStorage.getItem("sessions");
     return saved ? JSON.parse(saved) : [];
@@ -40,13 +38,12 @@ function App() {
   return (
       <div className={`body-container ${themeChange}`}>
       {/* toggle theme color */}
-      <ThemeToggle />      
+           
       <Header changePage={setActivePage} activePage={activePage} />
 
       <main>
-        {activePage === "Home" && <Home />}
         {activePage === "Dashboard" && <Dashboard />}
-        {activePage === "Tasks" && <Tasks />}
+       
 
         {activePage === "Timer" && (
           <TimerPage
