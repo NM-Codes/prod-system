@@ -1,17 +1,20 @@
 import "./Header.css"
 import menuItems from "./navData"
 
+
 //ChangePage state funktion från app.jsx för att uppdatera sidan, activepage är den aktiva sidans titel
 function Header ({changePage, activePage}) {
+  
 
   return (
-    <header>
+    <header className="header-wrapper">
         <h1>Projektnamn</h1>
         
         <nav>
           <ul>
               {/* Gå igenom arrayen och mappa ut */}
-              {menuItems.map((item) => (
+              {menuItems.filter((item)=>item.title !== "Session")
+              .map((item) => (
                 <li
                   key={item.title}
                   /* Sätter klassen "active" om knappen matchar nuvarande sida */
@@ -25,6 +28,7 @@ function Header ({changePage, activePage}) {
                 </li>
               ))}
           </ul>
+
         </nav>
     </header>
   );
