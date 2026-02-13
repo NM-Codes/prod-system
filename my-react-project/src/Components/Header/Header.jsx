@@ -1,5 +1,6 @@
 import "./Header.css"
 import menuItems from "./navData"
+import ThemeToggle from "../ThemeToggle/ThemeToggle.jsx"
 
 
 //ChangePage state funktion från app.jsx för att uppdatera sidan, activepage är den aktiva sidans titel
@@ -30,6 +31,11 @@ function Header ({changePage, activePage}) {
           </ul>
 
         </nav>
+
+        <div className="header-right">
+            <ThemeToggle />
+        </div>
+        
     </header>
   );
 }

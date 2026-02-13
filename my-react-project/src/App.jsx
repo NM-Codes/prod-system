@@ -5,6 +5,10 @@ import Dashboard from './pages/Dashboard';
 import TimerPage from "./pages/Timer";
 import WorkSession from "./Components/WorkSession/WorkSession";
 import HistoryPage from "./pages/History";
+import { useTheme } from './Contexts/ThemeContext.jsx'
+import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
+import './index.css'
+
 
 function App() {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -13,6 +17,9 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [draftSession, setDraftSession] = useState(null);
+  
+  const { theme } = useTheme();
+  const themeChange = theme === 'light'? 'theme-toggle-dark' : 'theme-toggle-light';
 
   useEffect(() => {
     localStorage.setItem("sessions", JSON.stringify(sessions));
@@ -29,7 +36,9 @@ function App() {
   }
 
   return (
-    <div className="body-container">
+      <div className={`body-container ${themeChange}`}>
+      {/* toggle theme color */}
+           
       <Header changePage={setActivePage} activePage={activePage} />
 
       <main>
