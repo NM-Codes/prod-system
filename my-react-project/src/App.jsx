@@ -3,7 +3,7 @@ import './App.css';
 import Header from './Components/Header/Header';
 import Dashboard from './pages/Dashboard';
 import TimerPage from "./pages/Timer";
-import WorkSession from "./Components/WorkSession/WorkSession";
+import WorkSession from "./pages/WorkSessionpage.jsx";
 import HistoryPage from "./pages/History";
 import { useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
