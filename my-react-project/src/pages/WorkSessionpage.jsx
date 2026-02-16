@@ -1,5 +1,5 @@
-import WorkSessionForm from "../components/WorkSession";
-import "../components/WorkSession.css";
+import WorkSession from "../Components/WorkSession/WorkSession";
+import "../Components/WorkSession/WorkSession.css";
 
 export default function WorkSessionPage() {
   const handleStartSession = (sessionData) => {
