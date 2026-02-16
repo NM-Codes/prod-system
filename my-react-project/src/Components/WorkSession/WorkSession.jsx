@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EnergyLogger from "../EnergyLogger/EnergyLogger";
+import './WorkSession.css';
 
 /*
   WorkSession
@@ -9,68 +10,126 @@ import EnergyLogger from "../EnergyLogger/EnergyLogger";
   - Kan användas manuellt (failsafe)
 */
 
-export default function WorkSession({ initialSession, onSave }) {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Välj kategori");
-  const [sessionType, setSessionType] = useState("Deep work");
+export default function WorkSessionForm({ onStart }) {
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [focusMode, setFocusMode] = useState('');
+  const [energyLevel, setEnergyLevel] = useState();
+  
 
-  // Initieras från Timer om data finns
-  const [date, setDate] = useState(initialSession?.date ?? "");
-  const [startTime, setStartTime] = useState(initialSession?.startTime ?? "");
-  const [endTime, setEndTime] = useState(initialSession?.endTime ?? "");
-  const [energyLevel, setEnergyLevel] = useState(0);
+  const focusOptions = [
+    { label: 'Deep Work', emoji: '🎯', minutes: 90 },
+    { label: 'Möte',      emoji: '👥', minutes: 30 },
+    { label: 'Paus',      emoji: '☕', minutes: 15 },
+    { label: 'Övrigt',    emoji: '📝', minutes: 60 },
+  ];
 
-  function handleSubmit(e) {
+  //fixa så att numret i energyEmojis matchar energyLevel så att det blir lättare att välja rätt emoji//
+  const energyEmojis = ['😴 1', '😪 2', '😐 3', '🙂 4', '🚀 5'];
+
+
+  
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    onSave({
+    const selectedFocus = focusOptions.find(f => f.label === focusMode);
+
+    const session = {
       id: crypto.randomUUID(),
-      title,
-      category,
-      sessionType,
-      date,
-      startTime,
-      endTime,
+      title: title.trim() || 'Session utan titel',
+      category: category.trim() || 'Övrigt',
+      focusMode,
       energyLevel,
-    });
-  }
+      durationMinutes: selectedFocus?.minutes || 60,
+      startTime: new Date().toISOString(),
+    };
+
+    onStart(session);
+
+    // Återställning av formuläret
+    setTitle('');
+    setCategory('');
+    setFocusMode('');
+    setEnergyLevel();
+  };
 
   return (
-    <div className="worksession-container">
-      <h2>Ny arbetssession</h2>
+    <div className="session-start-container">
+      <form className="session-form" onSubmit={handleSubmit}>
+        {/* Titel */}
+        <div className="form-group">
+          <label htmlFor="title">Titel</label>
+          <input
+            id="title"
+            type="text"
+            placeholder="Vad arbetar du med?"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="text-input"
+          />
+        </div>
 
-      <EnergyLogger onLevelSelect={setEnergyLevel} />
+        {/* Kategori */}
+        <div className="form-group">
+          <label htmlFor="category">Kategori</label>
+          <input
+            id="category"
+            type="text"
+            placeholder="T.ex. Projekt, Studier, Möte"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="text-input"
+          />
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Titel"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
+        {/* Fokuslägen */}
+        <div className="form-group">
+          <label>Välj fokusläge</label>
+          <div className="focus-mode-buttons">
+            {focusOptions.map((option) => (
+              <button
+                key={option.label}
+                type="button"
+                className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
+                onClick={() => setFocusMode(option.label)}
+              >
+                <span className="emoji">{option.emoji}</span>
+                <span>{option.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option disabled>Välj kategori</option>
-          <option>Arbete</option>
-          <option>Personligt</option>
-          <option>Lärande</option>
-          <option>Övrigt</option>
-        </select>
+        {/* Energinivå */}
+        <div className="form-group energy-group">
+          <label>Energinivå</label>
+          <div className="energy-levels">
+            {energyEmojis.map((emoji, index) => {
+              const level = index + 1;
+              return (
+                <button
+                  key={level}
+                  type="button"
+                  className={`energy-btn ${energyLevel === level ? 'selected' : ''}`}
+                  onClick={() => setEnergyLevel(level)}
+                  title={`Nivå ${level}`}
+                >
+                  {emoji}
+                </button>
+              );
+            })}
+          </div>
+          <div className="energy-labels">
+            <span>Mycket låg</span>
+            <span>Mycket hög</span>
+          </div>
+        </div>
 
-        <select value={sessionType} onChange={(e) => setSessionType(e.target.value)}>
-          <option>🎯 Deep Work</option>
-          <option>👥 Möte</option>
-          <option>📋 Planering</option>
-          <option>📚 Lärande</option>
-          <option>☕ Paus</option>
-          <option>📌 Övrigt</option>
-        </select>
-
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-        <input type="time" step="1" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
-        <input type="time" step="1" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
-
-        <button type="submit">Spara session</button>
+        {/* Start-knapp */}
+        <button type="submit" className="start-button">
+          ▶ Starta
+        </button>
       </form>
     </div>
   );
