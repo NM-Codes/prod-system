@@ -10,7 +10,7 @@ import './WorkSession.css';
   - Kan användas manuellt (failsafe)
 */
 
-export default function WorkSessionForm({ onStart }) {
+export default function WorkSession({ onStart }) {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [focusMode, setFocusMode] = useState('');
@@ -57,6 +57,23 @@ export default function WorkSessionForm({ onStart }) {
   return (
     <div className="session-start-container">
       <form className="session-form" onSubmit={handleSubmit}>
+        {/* Fokuslägen */}
+        <div className="form-group">
+          <label>Välj fokusläge</label>
+          <div className="focus-mode-buttons">
+            {focusOptions.map((option) => (
+              <button
+                key={option.label}
+                type="button"
+                className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
+                onClick={() => setFocusMode(option.label)}
+              >
+                <span className="emoji">{option.emoji}</span>
+                <span>{option.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
         {/* Titel */}
         <div className="form-group">
           <label htmlFor="title">Titel</label>
@@ -83,23 +100,6 @@ export default function WorkSessionForm({ onStart }) {
           />
         </div>
 
-        {/* Fokuslägen */}
-        <div className="form-group">
-          <label>Välj fokusläge</label>
-          <div className="focus-mode-buttons">
-            {focusOptions.map((option) => (
-              <button
-                key={option.label}
-                type="button"
-                className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
-                onClick={() => setFocusMode(option.label)}
-              >
-                <span className="emoji">{option.emoji}</span>
-                <span>{option.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* Energinivå */}
         <div className="form-group energy-group">
