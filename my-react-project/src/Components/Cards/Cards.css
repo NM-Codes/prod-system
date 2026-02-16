@@ -17,10 +17,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   color: #111827;
 }
-.card-light:hover {
-  background: linear-gradient(135deg, #625ff8 0%, #9f4efd 100%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
 
 
 /* Dark Mode Template */
@@ -30,15 +26,8 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
   color: #f9fafb;
 }
-.card-dark:hover{
-  background: linear-gradient(135deg, #625ff8 0%, #9f4efd 100%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
 .card-content {
   color: #7c8390;
-}
-.card-content:hover {
-  color: #fff;
 }
 
 .card-title {

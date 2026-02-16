@@ -1,0 +1,200 @@
+.dashboard {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* HEADER */
+.dashboard-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* GRID FÖR STATS */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+/* 2-KOLUMN GRID */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+
+/* STAT STYLING */
+.stat-row{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.stat-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+/* Specifik styling för "Idag"-card */
+.card-today {
+  background:  linear-gradient(150deg, #d0ddf7,  #F9F4FF ); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+
+ /*DARK MODE FÖR CARD-TODAY */
+  /*background: linear-gradient(135deg, #1f2841, #2A2749);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);*/
+
+.stat-value-blue,
+.stat-value-purple,
+.stat-value-green {
+    font-size: 2rem;
+    font-weight: 600;
+}
+.stat-value-blue{
+    color: #135DFC;
+    
+    
+}
+
+.stat-value-purple{
+    color: #9811FA;
+}
+
+.stat-value-green{
+    color: #00A63D;
+}
+
+
+/* LARGE CARD */
+.large-card {
+    min-height: 320px;
+}
+
+/* CHART PLACEHOLDER */
+.chart-placeholder {
+    height: 240px;
+    border-radius: 10px;
+    background: var(--bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+}
+
+/* LISTOR */
+.session-list,
+.start-list {
+    color: #056730;
+    padding: 0;
+    margin: 0;
+}
+
+.session-list li,
+.start-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+.empty-text {
+    color: var(--text-muted);
+}
+
+
+
+
+.card-base.footer-card {
+ background: #EFF9FA;
+ color:#056730;
+ border:  2px solid #b4eec9;
+}
+
+.card-base.footer-card .card-icon-base {
+  display: none;
+}
+
+
+
+
+/* RESPONSIVITET */
+
+@media (max-width: 768px) {
+
+  .dashboard {
+    padding: 1rem;
+    gap: 1.25rem;
+  }
+
+  /* Header */
+  .dashboard-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    
+
+  }
+  .dashboard-header h1{
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .dashboard-header p {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+ 
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+
+  /* Statistik */
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .stat-title {
+    font-size: 0.75rem;
+  }
+
+  /* Chart */
+  .chart-placeholder {
+    height: 180px;
+  }
+
+  /* Listor */
+  .session-list li,
+  .start-list li {
+    padding: 0.6rem 0;
+    font-size: 0.85rem;
+  }
+
+}

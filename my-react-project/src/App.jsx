@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './Components/Header/Header';
-import Dashboard from './pages/DashboardPage.jsx';
+import DashboardPage from './pages/DashboardPage.jsx';
 import TimerPage from "./pages/Timer";
 import WorkSession from "./pages/WorkSessionpage.jsx";
 import HistoryPage from "./pages/History";
@@ -42,7 +42,7 @@ function App() {
       <Header changePage={setActivePage} activePage={activePage} />
 
       <main>
-        {activePage === "Dashboard" && <Dashboard />}
+        {activePage === "Dashboard" && <DashboardPage />}
        
 
         {activePage === "Timer" && (
