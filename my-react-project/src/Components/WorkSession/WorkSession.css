@@ -1,7 +1,43 @@
+h3 {
+  color: #495565;
+}
+.main-title,
+.subtitle {
+  text-align: left;
+  color: #374151;
+}
+.modes{
+
+  margin: 1rem 0;
+}
+.mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 12rem;
+}
+.sub-title{
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.mode-btn.selected {
+  border-color: #6366f1;
+  background-color: #e0e7ff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
 .session-start-container {
-  max-width: 460px;
+  max-width: 750px; /* ändra bredden på cardsen om så behövs desktop*/
   margin: 2rem auto;
   padding: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .session-form {
@@ -40,125 +76,78 @@
 
 .focus-mode-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.9rem;
-  margin-top: 0.4rem;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .focus-btn {
-  flex: 1 1 45%;
-  min-width: 140px;
-  padding: 1rem 1.2rem;
+  flex: 1 1 0;
+  min-width: 150px; 
+  max-width: 200px;
+  padding: 0.7rem 0.3rem;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   background: white;
   cursor: pointer;
-  font-size: 1.05rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.2rem;
   transition: all 0.15s;
 }
 
 .focus-btn .emoji {
-  font-size: 1.4rem;
+  font-size: 2.5rem;
+  margin-bottom: 0.2rem;
+}
+.focus-btn .label {
+  font-size: 1.05rem;
+  color: #374151;
+  font-weight: bold;
+}
+.focus-btn .minutes {
+  font-size: 0.8rem;
+  color: #6b7280;
 }
 
-.focus-btn.selected {
-  border-color: #6366f1;
-  background: #eef2ff;
-  font-weight: 600;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-}
+ /*FÄRGER PÅ FOKUS KNAPPARNA*/
 
-.energy-group {
-  margin-top: 0.8rem;
-}
+.focus-btn.selected:nth-child(1){ border-color: #FF9B49; background-color: #f8f4f1;}
+.focus-btn.selected:nth-child(2){ border-color: #2A7FFF; background-color: #E5ECF4;}
+.focus-btn.selected:nth-child(3){ border-color: #6DD18C; background-color: #eefcf5;}
+.focus-btn.selected:nth-child(4){ border-color: #9096A3; background-color: #f0f1f4;}
 
-.energy-levels {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0 0.6rem;
-}
 
-.energy-btn {
-  font-size: 1.8rem;
-  width: 64px;
-  height: 64px;
-  border: none;
-  border-radius: 50%;
-  background: #f3f4f6; /* bakgrunds färg på varje energi nivå (kan ändras). */
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.energy-btn.selected {
-  background: #c7d2fe; /* bakgrunds färg på cirkel in energin nivån (kan ändras). */
-  transform: scale(1.18);
-  box-shadow: 0 0 0 5px rgba(165, 180, 252, 0.4);
-}
-
-.energy-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: #6b7280; /* färg på texten under energi nivå (mycket låg, mycket hög) (kan ändras). */
-  margin-top: 0.3rem;
-}
-
-.start-button {
-  margin-top: 1.8rem;
-  padding: 1.2rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: white;
-  background: #6366f1;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.start-button:hover {
-  background: #4f46e5;
-}
-
-.start-button:active {
-  transform: translateY(1px);
-}
-
-@media (max-width: 500px) {
-  .worksession-container {
-    margin: 1rem;
-    padding: 1rem;
+@media (max-width: 600px) {
+  .session-start-container {
+    max-width: 98vw;
+    margin: 0.5rem auto;
+    padding: 0.7rem;
   }
-
-  .worksession-title {
-    font-size: 1.5rem;
-  }
-
-  .worksession-form input,
-  .worksession-form select,
-  .worksession-button,
-  .worksession-reset-btn {
-    width: 100%;
-  }
-
-  .priority-btn {
+  .focus-mode-buttons {
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 0.5rem;
+    justify-content: center;
   }
-
-  .priority-button {
-    flex: 1 1 30%;
-    font-size: 0.85rem;
+  .focus-btn {
+    flex: 1 1 45%;
+    min-width: 45%;
+    max-width: 48%;
+    margin-bottom: 0.5rem;
+    padding: 0.7rem 0.2rem;
+    font-size: 0.95rem;
+    box-sizing: border-box;
   }
-
-  .sessions-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  .modes {
+    gap: 0.5rem;
+  }
+  .mode-btn {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.98rem;
   }
 }
 
 
-/* lägg till root så att typsnitt och text samt färgschema är enligt vår applikation */

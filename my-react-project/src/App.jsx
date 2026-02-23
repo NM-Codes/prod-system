@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './Components/Header/Header';
 import DashboardPage from './pages/DashboardPage.jsx';
-import TimerPage from "./pages/Timer";
-import WorkSession from "./pages/WorkSessionpage.jsx";
+import WorkSessionPage from './pages/WorkSessionpage.jsx';
 import HistoryPage from "./pages/History";
 import { useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
 import './index.css'
+
 
 
 function App() {
@@ -45,17 +45,8 @@ function App() {
         {activePage === "Dashboard" && <DashboardPage />}
        
 
-        {activePage === "Timer" && (
-          <TimerPage
-            onStop={(data) => {
-              setDraftSession(data);
-              setActivePage("Session");
-            }}
-          />
-        )}
-
-        {activePage === "Session" && (
-          <WorkSession
+        {(activePage === "Timer" || activePage === "WorkSession") && (
+          <WorkSessionPage
             initialSession={draftSession}
             onSave={(session) => {
               setSessions(prev => [...prev, session]);
@@ -64,7 +55,6 @@ function App() {
             }}
           />
         )}
-
         {activePage === "History" && (
           <HistoryPage
             sessions={sessions}

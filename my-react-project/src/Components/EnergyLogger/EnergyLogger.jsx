@@ -4,11 +4,11 @@ import "./EnergyLogger.css"
 function EnergyLogger({onLevelSelect}) {
   // Lista över tillgängliga energinivåer med tillhörande beskrivningar
   const energyLevels = [
-    {level: 1, description: "Mycket låg" },
-    {level: 2, description: "Låg" },
-    {level: 3, description: "Medel" },
-    {level: 4, description: "Hög" },
-    {level: 5, description: "Mycket Hög" }
+    {level: "😴", description: "1" },
+    {level: "🥱", description: "2" },
+    {level: "😐", description: "3" },
+    {level: "😊", description: "4" },
+    {level: "🚀", description: "5" }
   ]
 
   // Lokal state för att hålla koll på vilken nivå som är vald
@@ -28,8 +28,8 @@ function EnergyLogger({onLevelSelect}) {
   }
 
   return(
-    <div>
-      <h3>Hur var din energinivå under passet?</h3>
+   <div className="form-group">
+      <label htmlFor="category">Energinivå</label> {/* Rubrik för sektionen samma som titel och kategori */}
 
       <div className="button-group">
       {/* Skapa en knapp för varje energinivå */}
@@ -44,11 +44,11 @@ function EnergyLogger({onLevelSelect}) {
         </button>
       ))}
       </div>
+      {/* Mycket låg text till vänster och Mycket hög text till höger precis under energi nivåerna*/}
 
       {/*För kontroll att det fungerar*/}
-      <p>Vald nivå: {energy > 0 ? energy : "ingen vald ännu"}</p>
-
-    </div>
+      <p style={{ marginTop: '0.5rem', color: '#6b7280' }}>Vald energinivå: {energy || "Ingen"}</p>
+   </div>
   )
 }
 

@@ -1,21 +1,16 @@
 import { useState } from "react";
+import Timer from "../Timer/Timer";
 import EnergyLogger from "../EnergyLogger/EnergyLogger";
 import './WorkSession.css';
+import Card from "../Cards/Cards";
+import MyButton from "../Button/Button";
 
-/*
-  WorkSession
-  ------------
-  Formulär för att skapa EN session
-  - Kan komma från Timer (auto-fylld tid)
-  - Kan användas manuellt (failsafe)
-*/
-
-export default function WorkSession({ onStart }) {
+export default function WorkSession({ onSave }) {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [focusMode, setFocusMode] = useState('');
-  const [energyLevel, setEnergyLevel] = useState();
-  
+  const [energyLevel, setEnergyLevel] = useState(undefined);
+  const [mode, setMode] = useState('normal');
 
   const focusOptions = [
     { label: 'Deep Work', emoji: '🎯', minutes: 90 },
@@ -24,113 +19,126 @@ export default function WorkSession({ onStart }) {
     { label: 'Övrigt',    emoji: '📝', minutes: 60 },
   ];
 
-  //fixa så att numret i energyEmojis matchar energyLevel så att det blir lättare att välja rätt emoji//
-  const energyEmojis = ['😴 1', '😪 2', '😐 3', '🙂 4', '🚀 5'];
+  // Denna funktion körs när användaren trycker STOP i Timer-komponenten
+  const handleTimerComplete = ({ startTimestamp, endTimestamp }) => {
+    if (!startTimestamp || !endTimestamp) return;
 
-
-  
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const selectedFocus = focusOptions.find(f => f.label === focusMode);
+    const durationMs = endTimestamp - startTimestamp;
+    const durationMinutes = Math.round(durationMs / 60000); // avrunda till närmaste minut
 
     const session = {
       id: crypto.randomUUID(),
       title: title.trim() || 'Session utan titel',
       category: category.trim() || 'Övrigt',
-      focusMode,
-      energyLevel,
-      durationMinutes: selectedFocus?.minutes || 60,
-      startTime: new Date().toISOString(),
+      focusMode: focusMode || 'Övrigt',
+      energyLevel: energyLevel ?? 3,          
+      durationMinutes,
+      startTime: new Date(startTimestamp).toISOString(),
+      endTime: new Date(endTimestamp).toISOString(),
+      createdAt: new Date().toISOString(),
     };
 
-    onStart(session);
+    if (typeof onSave === 'function') {
+      onSave(session);
+    }
 
-    // Återställning av formuläret
+    // Återställ allt för nästa session
     setTitle('');
     setCategory('');
     setFocusMode('');
-    setEnergyLevel();
+    setEnergyLevel(undefined);
   };
 
   return (
     <div className="session-start-container">
-      <form className="session-form" onSubmit={handleSubmit}>
-        {/* Fokuslägen */}
-        <div className="form-group">
-          <label>Välj fokusläge</label>
-          <div className="focus-mode-buttons">
-            {focusOptions.map((option) => (
-              <button
-                key={option.label}
-                type="button"
-                className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
-                onClick={() => setFocusMode(option.label)}
-              >
-                <span className="emoji">{option.emoji}</span>
-                <span>{option.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        {/* Titel */}
-        <div className="form-group">
-          <label htmlFor="title">Titel</label>
-          <input
-            id="title"
-            type="text"
-            placeholder="Vad arbetar du med?"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="text-input"
-          />
-        </div>
-
-        {/* Kategori */}
-        <div className="form-group">
-          <label htmlFor="category">Kategori</label>
-          <input
-            id="category"
-            type="text"
-            placeholder="T.ex. Projekt, Studier, Möte"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="text-input"
-          />
-        </div>
-
-
-        {/* Energinivå */}
-        <div className="form-group energy-group">
-          <label>Energinivå</label>
-          <div className="energy-levels">
-            {energyEmojis.map((emoji, index) => {
-              const level = index + 1;
-              return (
-                <button
-                  key={level}
-                  type="button"
-                  className={`energy-btn ${energyLevel === level ? 'selected' : ''}`}
-                  onClick={() => setEnergyLevel(level)}
-                  title={`Nivå ${level}`}
-                >
-                  {emoji}
-                </button>
-              );
-            })}
-          </div>
-          <div className="energy-labels">
-            <span>Mycket låg</span>
-            <span>Mycket hög</span>
-          </div>
-        </div>
-
-        {/* Start-knapp */}
-        <button type="submit" className="start-button">
-          ▶ Starta
+      <h1 className="main-title">Timer</h1>
+      <p className="subtitle">Starta ditt arbetspass och spåra din tid</p>
+      
+      <Card className="modes">
+        <button
+          className={`mode-btn ${mode === 'normal' ? 'selected' : ''}`}
+          onClick={() => setMode('normal')}
+        >
+          Normal Timer
+          <span className="sub-title">Flexibel tidsspårning</span>
         </button>
-      </form>
+
+         
+         <button className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`} onClick={() => setMode('pomodoro')}>
+          Pomodoro Timer
+          <span className="sub-title">Fokus + pauser</span>
+        </button> 
+      </Card>
+
+      {/* FOKUSKNAPPAR */}
+      <Card className="focus">
+      <div className="focus-header">
+        <h3>Välj fokusläge</h3>
+        <div className="settings">
+          <span className="gear-emoji">⚙️</span>
+          <label htmlFor="setting-label">Timer-inställningar</label>
+        </div>
+      </div>
+
+
+      <div className="focus-mode-buttons">
+        {focusOptions.map((option) => (
+          <button
+          key={option.label}
+          type="button"
+          className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
+          onClick={() => setFocusMode(option.label)}
+          >
+            <span className="emoji">{option.emoji}</span>
+            <span className="label">{option.label}</span>
+            <span className="minutes">{option.minutes} min</span>
+          </button>
+        ))}
+      </div>
+        </Card>
+
+
+    
+      {/* TIMERN – här startar och stoppar användaren */}
+      <Card className="timer">
+
+      <Timer onStop={handleTimerComplete} />
+
+      {/* TITEL */}
+      <div className="form-group">
+        <label htmlFor="title">Titel</label>
+        <input
+          id="title"
+          type="text"
+          placeholder="Vad arbetar du med?"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="text-input"
+          />
+      </div>
+
+      {/* KATEGORI */}
+      <div className="form-group">
+        <label htmlFor="category">Kategori</label>
+        <input
+          id="category"
+          type="text"
+          placeholder="T.ex. Projekt, Studier, Möte"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="text-input"
+          />
+      </div>
+
+      {/* ENERGI KOMPONENTEN */}
+      <EnergyLogger onLevelSelect={setEnergyLevel} />
+      
+
+      {/* Tips till användaren exempel kan ändras */}
+      <p className="hint-text" style={{ marginTop: '1.5rem', color: '#6b7280', textAlign: 'center' }}>
+        Tryck Start i timern för att börja — Stop för att spara sessionen
+      </p>
+      </Card>
     </div>
   );
 }
