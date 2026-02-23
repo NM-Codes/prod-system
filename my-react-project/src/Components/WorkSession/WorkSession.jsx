@@ -54,30 +54,32 @@ export default function WorkSession({ onSave }) {
       <h1 className="main-title">Timer</h1>
       <p className="subtitle">Starta ditt arbetspass och spåra din tid</p>
       
-      <Card className="modes">
+      <Card> 
+      <div className="modes">
         <button
           className={`mode-btn ${mode === 'normal' ? 'selected' : ''}`}
           onClick={() => setMode('normal')}
         >
-          Normal Timer
+          <span className="mode-title">Normal Timer</span>
           <span className="sub-title">Flexibel tidsspårning</span>
         </button>
 
          
          <button className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`} onClick={() => setMode('pomodoro')}>
-          Pomodoro Timer
+          <span className="mode-title">Pomodora Timer</span>
           <span className="sub-title">Fokus + pauser</span>
         </button> 
+        </div>
       </Card>
 
       {/* FOKUSKNAPPAR */}
       <Card className="focus">
       <div className="focus-header">
         <h3>Välj fokusläge</h3>
-        <div className="settings">
+        <MyButton className="settings">
           <span className="gear-emoji">⚙️</span>
           <label htmlFor="setting-label">Timer-inställningar</label>
-        </div>
+        </MyButton>
       </div>
 
 
