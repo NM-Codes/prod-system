@@ -1,0 +1,41 @@
+.history-page{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: var(--space-xl);
+}
+.wrapper-empty-history-content{
+    width: 100%;
+    padding: 20px 0;
+}
+
+.empty-history-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-history-content p {
+  font-size: 1.25rem;        
+  font-weight: 600;    
+  margin: 0;
+}
+
+.empty-history-content span {
+  font-size: 1rem;           
+  max-width: 300px;          
+  margin: 0 auto;
+}
+
+.wrapper-empty-history-content .card-icon-base{
+    display: none;
+}
+
+.history-page {
+  padding: 40px; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
