@@ -2,7 +2,6 @@ import { useState } from "react";
 import EnergyLogger from "../EnergyLogger/EnergyLogger";
 //Import the useSetting hook
 import { useSettings } from "../../Contexts/SettingsContext";
-import './WorkSession.css';
 
 /*
   WorkSession
@@ -21,12 +20,11 @@ export default function WorkSession({ initialSession, onSave }) {
   const [category, setCategory] = useState("Välj kategori");
   const [sessionType, setSessionType] = useState("Deep work");
 
-  const focusOptions = [
-    { label: 'Deep Work', emoji: '🎯', minutes: 90 },
-    { label: 'Möte',      emoji: '👥', minutes: 30 },
-    { label: 'Paus',      emoji: '☕', minutes: 15 },
-    { label: 'Övrigt',    emoji: '📝', minutes: 60 },
-  ];
+  // Initieras från Timer om data finns
+  const [date, setDate] = useState(initialSession?.date ?? "");
+  const [startTime, setStartTime] = useState(initialSession?.startTime ?? "");
+  const [endTime, setEndTime] = useState(initialSession?.endTime ?? "");
+  const [energyLevel, setEnergyLevel] = useState(0);
 
   //toggle 12-hours and 24-hours
   const formatDisplay = (timeStr) => {
@@ -51,13 +49,14 @@ export default function WorkSession({ initialSession, onSave }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const selectedFocus = focusOptions.find(f => f.label === focusMode);
-
-    const session = {
+    onSave({
       id: crypto.randomUUID(),
-      title: title.trim() || 'Session utan titel',
-      category: category.trim() || 'Övrigt',
-      focusMode,
+      title,
+      category,
+      sessionType,
+      date,
+      startTime,
+      endTime,
       energyLevel,
       //Save the time in the format the user prefers
       startTime: formatDisplay(startTime),
