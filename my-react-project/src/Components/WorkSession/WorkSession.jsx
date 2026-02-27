@@ -1,5 +1,7 @@
 import { useState } from "react";
 import EnergyLogger from "../EnergyLogger/EnergyLogger";
+//Import the useSetting hook
+import { useSettings } from "../../Contexts/SettingsContext";
 import './WorkSession.css';
 
 /*
@@ -10,12 +12,14 @@ import './WorkSession.css';
   - Kan användas manuellt (failsafe)
 */
 
-export default function WorkSession({ onStart }) {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [focusMode, setFocusMode] = useState('');
-  const [energyLevel, setEnergyLevel] = useState();
-  
+export default function WorkSession({ initialSession, onSave }) {
+  // Access the timeFormat
+  const { timeFormat } = useSettings();
+
+
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("Välj kategori");
+  const [sessionType, setSessionType] = useState("Deep work");
 
   const focusOptions = [
     { label: 'Deep Work', emoji: '🎯', minutes: 90 },
@@ -24,13 +28,27 @@ export default function WorkSession({ onStart }) {
     { label: 'Övrigt',    emoji: '📝', minutes: 60 },
   ];
 
-  //fixa så att numret i energyEmojis matchar energyLevel så att det blir lättare att välja rätt emoji//
-  const energyEmojis = ['😴 1', '😪 2', '😐 3', '🙂 4', '🚀 5'];
+  //toggle 12-hours and 24-hours
+  const formatDisplay = (timeStr) => {
+    if (!timeStr) return "--:--";
+    try {
+      const [hours, minutes] = timeStr.split(':');
+      const d = new Date();
+      d.setHours(parseInt(hours, 10));
+      d.setMinutes(parseInt(minutes, 10));
+      d.setSeconds(0);
+      
+      return d.toLocaleTimeString('sv-SE', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        hour12: timeFormat === '12h' 
+      });
+    } catch (e) {
+      return timeStr; // Fallback if string is messy
+    }
+  };
 
-
-  
-
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const selectedFocus = focusOptions.find(f => f.label === focusMode);
@@ -41,95 +59,51 @@ export default function WorkSession({ onStart }) {
       category: category.trim() || 'Övrigt',
       focusMode,
       energyLevel,
-      durationMinutes: selectedFocus?.minutes || 60,
-      startTime: new Date().toISOString(),
-    };
-
-    onStart(session);
-
-    // Återställning av formuläret
-    setTitle('');
-    setCategory('');
-    setFocusMode('');
-    setEnergyLevel();
-  };
+      //Save the time in the format the user prefers
+      startTime: formatDisplay(startTime),
+      endTime: formatDisplay(endTime),
+    });
+  }
 
   return (
-    <div className="session-start-container">
-      <form className="session-form" onSubmit={handleSubmit}>
-        {/* Fokuslägen */}
-        <div className="form-group">
-          <label>Välj fokusläge</label>
-          <div className="focus-mode-buttons">
-            {focusOptions.map((option) => (
-              <button
-                key={option.label}
-                type="button"
-                className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
-                onClick={() => setFocusMode(option.label)}
-              >
-                <span className="emoji">{option.emoji}</span>
-                <span>{option.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        {/* Titel */}
-        <div className="form-group">
-          <label htmlFor="title">Titel</label>
-          <input
-            id="title"
-            type="text"
-            placeholder="Vad arbetar du med?"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="text-input"
-          />
-        </div>
+    <div className="worksession-container">
+      <h2>Ny arbetssession</h2>
 
-        {/* Kategori */}
-        <div className="form-group">
-          <label htmlFor="category">Kategori</label>
-          <input
-            id="category"
-            type="text"
-            placeholder="T.ex. Projekt, Studier, Möte"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="text-input"
-          />
-        </div>
+      <EnergyLogger onLevelSelect={setEnergyLevel} />
 
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Titel"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
 
-        {/* Energinivå */}
-        <div className="form-group energy-group">
-          <label>Energinivå</label>
-          <div className="energy-levels">
-            {energyEmojis.map((emoji, index) => {
-              const level = index + 1;
-              return (
-                <button
-                  key={level}
-                  type="button"
-                  className={`energy-btn ${energyLevel === level ? 'selected' : ''}`}
-                  onClick={() => setEnergyLevel(level)}
-                  title={`Nivå ${level}`}
-                >
-                  {emoji}
-                </button>
-              );
-            })}
-          </div>
-          <div className="energy-labels">
-            <span>Mycket låg</span>
-            <span>Mycket hög</span>
-          </div>
-        </div>
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option disabled>Välj kategori</option>
+          <option>Arbete</option>
+          <option>Personligt</option>
+          <option>Lärande</option>
+          <option>Övrigt</option>
+        </select>
 
-        {/* Start-knapp */}
-        <button type="submit" className="start-button">
-          ▶ Starta
-        </button>
+        <select value={sessionType} onChange={(e) => setSessionType(e.target.value)}>
+          <option>🎯 Deep Work</option>
+          <option>👥 Möte</option>
+          <option>📋 Planering</option>
+          <option>📚 Lärande</option>
+          <option>☕ Paus</option>
+          <option>📌 Övrigt</option>
+        </select>
+        
+        <p>Vald tid: {formatDisplay(startTime)}  - {formatDisplay(endTime)}</p> 
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        
+        {/* IMPORTANT: value must stay in 24h (HH:mm:ss) for HTML inputs to work */}
+        <input type="time" step="1" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+        <input type="time" step="1" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
+
+        <button type="submit">Spara session</button>
       </form>
     </div>
   );

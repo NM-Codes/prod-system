@@ -5,9 +5,9 @@ import DashboardPage from './pages/DashboardPage.jsx';
 import TimerPage from "./pages/Timer";
 import WorkSession from "./pages/WorkSessionpage.jsx";
 import HistoryPage from "./pages/History";
+import Setting from './pages/Setting.jsx';
 import { useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
-import './index.css'
 
 
 function App() {
@@ -42,7 +42,12 @@ function App() {
       <Header changePage={setActivePage} activePage={activePage} />
 
       <main>
-        {activePage === "Dashboard" && <DashboardPage />}
+ {/*feature/setting
+        
+        {activePage === "Home" && <Home />}
+        {activePage === "Dashboard" && <Dashboard />}
+        {activePage === "Tasks" && <Tasks />}
+        {activePage === "Dashboard" && <DashboardPage />}*/}
        
 
         {activePage === "Timer" && (
@@ -72,6 +77,7 @@ function App() {
             onDelete={handleDelete}
           />
         )}
+        {activePage === "Setting" && <Setting />}
       </main>
     </div>
   );

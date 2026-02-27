@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Timer.module.css";
 
+
 /*
   Timer ansvarar ENBART för:
   - tidräkning

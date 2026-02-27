@@ -3,7 +3,8 @@ import './Cards.css'
 import { useTheme } from '../../Contexts/ThemeContext';
 
 // Card component with dark and light mode support
-const Card = ({ title, children, icon, className}) => {
+const Card = ({ title, children, icon, style}) => {
+//const Card = ({ title, children, icon, className}) => {
   const {theme} = useTheme();
 
   //toggle the cards dark and light mode 
@@ -13,9 +14,13 @@ const Card = ({ title, children, icon, className}) => {
 
   return (
     // Apply base class and theme-specific class
-    <div className={`card-base ${cardTheme} ${className || ''}`}>
+ {/*feature/setting*/}
+    <div className={`card-base ${cardTheme}`} style={style}>
+    {/*<div className={`card-base ${cardTheme} ${className || ''}`}>*/}
       {/* Apply icon with theme-specific class */}
-      <img src={icon} className={`card-icon-base ${iconTheme}`} alt="icon" />
+      <div className={`card-icon-base ${iconTheme}`}>
+        {icon}
+      </div>
       {/* Conditionally render title if provided */}
       {title && <h3 className="card-title">{title}</h3>}
       <div className="card-content">
