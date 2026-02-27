@@ -30,6 +30,7 @@ const menuItems = [
 
   {title: "Setting",
     icon: <LuSettings />,
+  },
 
 
     //{title: "Settings",
