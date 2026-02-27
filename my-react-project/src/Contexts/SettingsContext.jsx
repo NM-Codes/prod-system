@@ -40,7 +40,7 @@ useEffect(() => {
 
 return (
     <SettingContext.Provider value={{ timeFormat, setTimeFormat, weekStart, setWeekStart, notifications, setNotifications, updateNotify, dailyGoal, 
-    setDailyGoal,energyLogging, setEnergyLogging, energyLogging, setEnergyLogging, autoSave, setAutoSave, saveChange, setSaveChange }}>
+    setDailyGoal,energyLogging, setEnergyLogging, autoSave, setAutoSave, saveChange, setSaveChange }}>
       {children}
     </SettingContext.Provider>
   );
