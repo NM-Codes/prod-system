@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import Header from './components/Header/Header';
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import Tasks from "./pages/Tasks";
+import Header from './Components/Header/Header';
+import DashboardPage from './pages/DashboardPage.jsx';
 import TimerPage from "./pages/Timer";
-import WorkSession from "./Components/WorkSession/WorkSession";
+import WorkSession from "./pages/WorkSessionpage.jsx";
 import HistoryPage from "./pages/History";
 import Setting from './pages/Setting.jsx';
 import { useTheme } from './Contexts/ThemeContext.jsx'
@@ -13,7 +11,7 @@ import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
 
 
 function App() {
-  const [activePage, setActivePage] = useState("Home");
+  const [activePage, setActivePage] = useState("Dashboard");
   const [sessions, setSessions] = useState(() => {
     const saved = localStorage.getItem("sessions");
     return saved ? JSON.parse(saved) : [];
@@ -40,14 +38,17 @@ function App() {
   return (
       <div className={`body-container ${themeChange}`}>
       {/* toggle theme color */}
-      <ThemeToggle />      
+           
       <Header changePage={setActivePage} activePage={activePage} />
 
       <main>
+ {/*feature/setting
         
         {activePage === "Home" && <Home />}
         {activePage === "Dashboard" && <Dashboard />}
         {activePage === "Tasks" && <Tasks />}
+        {activePage === "Dashboard" && <DashboardPage />}*/}
+       
 
         {activePage === "Timer" && (
           <TimerPage

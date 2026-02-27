@@ -1,114 +1,164 @@
-
-.worksession-container{
-  max-width: 900px;
+.session-start-container {
+  max-width: 460px;
   margin: 2rem auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 1.5rem;
 }
 
-
-.worksession-title {
-  text-align: left;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #0f0f0f;
-}
-.worksession-form{
+.session-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;    
+  gap: 1.6rem;
 }
 
-
-/* FORMULÄRFÄLT */
-
-.worksession-form{
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-.form-row{
-  display: flex;
-  gap: 1.5rem;
-}
-.form-group{
+.form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex: 1;
 }
 
-
-.worksession-input-label{
-  font-size: 0.95rem;
-  font-weight: 500;
+.form-group label {
+  font-weight: 450;
   color: #374151;
-}
-.worksession-input,
-.worksession-select{
-  padding: 0.75rem;
   font-size: 1rem;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background-color: #ffffff;
-  color: #374151;
-  width: 100%;
-  box-sizing: border-box;
+  text-align: left;
 }
-.worksession-input:focus,
-.worksession-select:focus{
+
+.text-input {
+  padding: 0.9rem 1.1rem;
+  font-size: 1.05rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #f9fafb;
+  transition: border-color 0.2s;
+}
+
+.text-input:focus {
   outline: none;
-  border-color: #7c3aed;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-.form-actions{
+.focus-mode-buttons {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 0.4rem;
 }
 
-/* KNAPPAR */
+.focus-btn {
+  flex: 1 1 45%;
+  min-width: 140px;
+  padding: 1rem 1.2rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.15s;
+}
 
-.worksession-button{
-  flex: 5;
-  padding: 0.85rem;
-  background-color: #5b42f3;
+.focus-btn .emoji {
+  font-size: 1.4rem;
+}
+
+.focus-btn.selected {
+  border-color: #6366f1;
+  background: #eef2ff;
+  font-weight: 600;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.energy-group {
+  margin-top: 0.8rem;
+}
+
+.energy-levels {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 0.6rem;
+}
+
+.energy-btn {
+  font-size: 1.8rem;
+  width: 64px;
+  height: 64px;
+  border: none;
+  border-radius: 50%;
+  background: #f3f4f6; /* bakgrunds färg på varje energi nivå (kan ändras). */
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.energy-btn.selected {
+  background: #c7d2fe; /* bakgrunds färg på cirkel in energin nivån (kan ändras). */
+  transform: scale(1.18);
+  box-shadow: 0 0 0 5px rgba(165, 180, 252, 0.4);
+}
+
+.energy-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #6b7280; /* färg på texten under energi nivå (mycket låg, mycket hög) (kan ändras). */
+  margin-top: 0.3rem;
+}
+
+.start-button {
+  margin-top: 1.8rem;
+  padding: 1.2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: white;
+  background: #6366f1;
   border: none;
-  border-radius: 10px;
-  font-weight: 500;
-  font-size: 1rem;
+  border-radius: 12px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s;
 }
 
-.worksession-button:hover{
-  opacity: 0.9;
-}
-.worksession-reset-btn{
-  flex: 1;
-  padding: 0.85rem;
-  background-color: #f3f4f6;
-  color: #1f2937;
-  border: none;
-  border-radius: 10px;
-  font-weight: 500;
-  cursor: pointer;
+.start-button:hover {
+  background: #4f46e5;
 }
 
-.worksession-reset-btn:hover {
-  background-color: #e5e7eb;
+.start-button:active {
+  transform: translateY(1px);
 }
 
-/* RESPONSIVT (MOBIL) */
+@media (max-width: 500px) {
+  .worksession-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
 
-@media (max-width: 600px) {
-  .form-row {
-      flex-direction: column;
-      gap: 1.2rem;
+  .worksession-title {
+    font-size: 1.5rem;
+  }
+
+  .worksession-form input,
+  .worksession-form select,
+  .worksession-button,
+  .worksession-reset-btn {
+    width: 100%;
+  }
+
+  .priority-btn {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .priority-button {
+    flex: 1 1 30%;
+    font-size: 0.85rem;
+  }
+
+  .sessions-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
+
+
+/* lägg till root så att typsnitt och text samt färgschema är enligt vår applikation */
