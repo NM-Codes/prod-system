@@ -12,10 +12,10 @@
 
 /* Light Mode Template */
 .card-light {
-  background-color: #ffffff;
-  border-color: #e5e7eb;
+  background-color: var(--color-card-light-bg);
+  border-color: var(--color-card-light-border);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  color: #111827;
+  color: var(--color-card-light-text);
 }
 .card-light:hover {
   background: linear-gradient(135deg, #625ff8 0%, #9f4efd 100%);
@@ -25,10 +25,10 @@
 
 /* Dark Mode Template */
 .card-dark {
-  background-color: #1f2937;
-  border-color: #374151;
+  background-color: var(--color-card-dark-bg);
+  border-color: var(--color-card-dark-border);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-  color: #f9fafb;
+  color: var(--color-card-dark-text);
 }
 .card-dark:hover{
   background: linear-gradient(135deg, #625ff8 0%, #9f4efd 100%);

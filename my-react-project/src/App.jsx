@@ -7,9 +7,9 @@ import Tasks from "./pages/Tasks";
 import TimerPage from "./pages/Timer";
 import WorkSession from "./Components/WorkSession/WorkSession";
 import HistoryPage from "./pages/History";
+import Setting from './pages/Setting.jsx';
 import { useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
-import './index.css'
 
 
 function App() {
@@ -44,6 +44,7 @@ function App() {
       <Header changePage={setActivePage} activePage={activePage} />
 
       <main>
+        
         {activePage === "Home" && <Home />}
         {activePage === "Dashboard" && <Dashboard />}
         {activePage === "Tasks" && <Tasks />}
@@ -75,6 +76,7 @@ function App() {
             onDelete={handleDelete}
           />
         )}
+        {activePage === "Setting" && <Setting />}
       </main>
     </div>
   );
