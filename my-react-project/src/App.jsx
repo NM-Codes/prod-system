@@ -4,7 +4,7 @@ import Header from './Components/Header/Header';
 import DashboardPage from './pages/DashboardPage.jsx';
 import WorkSessionPage from './pages/WorkSessionpage.jsx';
 import HistoryPage from "./pages/History";
-import { useTheme } from './Contexts/ThemeContext.jsx'
+import { ThemeProvider, useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
 import './index.css'
 

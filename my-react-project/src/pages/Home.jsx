@@ -1,5 +1,5 @@
 import GridContainer from "../components/GridContainer/GridContainer"
-import Card from "../components/Cards/Cards"
+import Card from "../components/Cards"
 
 
 function Home() {
