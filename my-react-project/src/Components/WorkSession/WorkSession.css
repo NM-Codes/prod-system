@@ -1,3 +1,7 @@
+.card-wrapper {
+  margin-bottom: 1.5rem; 
+}
+
 h3 {
   color: #495565;
 }
@@ -6,6 +10,8 @@ h3 {
   text-align: left;
   color: #374151;
 }
+
+/* MODE BUTTONS */
 .modes{
 display: flex;
 gap: 0.75rem;
@@ -39,6 +45,7 @@ width: 100%;
   background-color: #e0e7ff;
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
+/* CONTAINERS */
 .session-start-container {
   max-width: 750px; /* ändra bredden på cardsen om så behövs desktop*/
   margin: 2rem auto;
@@ -80,7 +87,7 @@ width: 100%;
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
-
+ /* FOCUS BUTTONS */
 .focus-mode-buttons {
   display: flex;
   flex-wrap: nowrap;
@@ -120,12 +127,108 @@ width: 100%;
   color: #6b7280;
 }
 
+/* LÅS KORTEN VID TIMERN */
+.locked {
+  pointer-events: none;  
+  opacity: 0.5;          
+}
+
+
+/* Text nedtoning */
+.dimmed {
+  opacity: 0.6;
+}
+
+/* Aktiv fokusläge, visuell indikation styling */
+.timer-overlay {
+  background-color: #1a1b3ddc; 
+  border-radius: 12px;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;   
+}
+
+/* Texten som visar fokusläge och minuter */
+.running-indicator {
+ 
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: white;  /*Ändra denna färg när det är darkmode*/
+  background-color: (rgb(3, 3, 3),rgb(42, 39, 39)); /*Ändra denna färg när det är darkmode*/
+  padding: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
  /*FÄRGER PÅ FOKUS KNAPPARNA*/
 
 .focus-btn.selected:nth-child(1){ border-color: #FF9B49; background-color: #f8f4f1;}
 .focus-btn.selected:nth-child(2){ border-color: #2A7FFF; background-color: #E5ECF4;}
 .focus-btn.selected:nth-child(3){ border-color: #6DD18C; background-color: #eefcf5;}
 .focus-btn.selected:nth-child(4){ border-color: #9096A3; background-color: #f0f1f4;}
+
+
+/* Container för knappar längst ner */
+.timer-buttons-bottom {
+  display: flex;
+  justify-content: center; 
+  gap: 1rem; 
+  margin-top: 2rem;
+  flex-wrap: wrap; 
+}
+
+/* Knapp stilen för all timer knappar*/
+.timer-buttons-bottom button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.2s ease;
+}
+
+
+.timer-buttons-bottom button:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+
+.startBtn, .resumeBtn{background-color: #135DFC;color: white;}
+.pausBtn{background-color: #E5E7EB; color: #0F1828;}
+.stopBtn{background-color: #E8000B; color: white;}
+
+
+/* Tooltip under knapparna */
+.form-tooltip {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #fbe1e1;       /*Bakgrundsfärg för varnings box, ändra vid darkmode */
+  color: #e8000b;                  /* textfärg, ändra vid darkmode */
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;         
+  border-radius: 8px;              
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+
+.form-tooltip::before {
+  content: "⚠️";
+  font-size: 1.5rem;
+}
+
+/* Enkel fadeIn animation tooltipen */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 
 @media (max-width: 600px) {
@@ -154,5 +257,16 @@ width: 100%;
   .mode-btn {
     padding: 0.5rem 0.7rem;
     font-size: 0.98rem;
+  }
+
+   .timer-buttons-bottom {
+    flex-direction: column; 
+    gap: 0.75rem;
+    align-items: stretch; 
+  }
+
+  .timer-buttons-bottom button {
+    width: 100%; 
+    text-align: center;
   }
 }

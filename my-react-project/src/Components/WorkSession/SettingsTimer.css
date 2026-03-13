@@ -33,7 +33,6 @@ position: relative;
 .settings-dropdown {
   position: absolute;
   top: 100%;
-  right: 10;
   width: 460px;
   background: white;
   border: 1px solid #d1d5db;
@@ -75,8 +74,8 @@ position: relative;
 }
 
 .focus-group.active {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(var(--accent-rgb, 139 92 246), 0.15);
+  border-color: white ;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.097);
 }
 
 .focus-title {

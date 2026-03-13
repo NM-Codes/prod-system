@@ -4,11 +4,11 @@ import "./EnergyLogger.css"
 function EnergyLogger({onLevelSelect}) {
   // Lista över tillgängliga energinivåer med tillhörande beskrivningar
   const energyLevels = [
-    {level: "😴", description: "1" },
-    {level: "🥱", description: "2" },
-    {level: "😐", description: "3" },
+    {level: "😴", description: "1", label: "Låg"},
+    {level: "🥱", description: "2"},
+    {level: "😐", description: "3"},
     {level: "😊", description: "4" },
-    {level: "🚀", description: "5" }
+    {level: "🚀", description: "5"},
   ]
 
   // Lokal state för att hålla koll på vilken nivå som är vald
@@ -47,7 +47,10 @@ function EnergyLogger({onLevelSelect}) {
       {/* Mycket låg text till vänster och Mycket hög text till höger precis under energi nivåerna*/}
 
       {/*För kontroll att det fungerar*/}
-      <p style={{ marginTop: '0.5rem', color: '#6b7280' }}>Vald energinivå: {energy || "Ingen"}</p>
+      {energy !== undefined && (
+        <p className="selected-energy" >Vald energinivå: <span className="energy-emoji"> {energy || ""}</span></p> 
+
+      )}
    </div>
   )
 }
