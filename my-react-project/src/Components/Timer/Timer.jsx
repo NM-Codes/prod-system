@@ -10,9 +10,7 @@ import styles from "./Timer.module.css";
 
 function Timer({ onStop }) {
   const [milliseconds, setMilliseconds] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
 
-  //useRef används för att överleva re-renders
   const intervalRef = useRef(null);
   const startTimestampRef = useRef(null);
 
