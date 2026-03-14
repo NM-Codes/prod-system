@@ -13,7 +13,7 @@
     border-radius: 50%;
     border: 8px solid transparent;
     background: linear-gradient(white,white) padding-box,
-    linear-gradient(135deg, #a78bfa, #ec4899) border-box;
+    linear-gradient(135deg, #DFE7FF, #6366F1) border-box;
     display: flex;
     justify-content: center;
     align-items: center;
