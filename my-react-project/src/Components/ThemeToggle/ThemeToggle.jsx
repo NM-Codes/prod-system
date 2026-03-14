@@ -12,6 +12,6 @@ export default function ThemeToggle(){
             alt= "Toggle Theme"
             width={'30px'}
             />
-        </button>
-    )
+        </button>   
+    )  
 }
