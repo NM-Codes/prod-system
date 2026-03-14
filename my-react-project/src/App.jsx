@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import './index.css';
 import Header from './Components/Header/Header';
 import DashboardPage from './pages/DashboardPage.jsx';
 import WorkSessionPage from './pages/WorkSessionpage.jsx';
@@ -41,12 +42,7 @@ function App() {
       <Header changePage={setActivePage} activePage={activePage} />
 
       <main>
- {/*feature/setting
-        
-        {activePage === "Home" && <Home />}
-        {activePage === "Dashboard" && <Dashboard />}
-        {activePage === "Tasks" && <Tasks />}
-        {activePage === "Dashboard" && <DashboardPage />}*/}
+        {activePage === "Dashboard" && <DashboardPage />}
        
 
         {(activePage === "Timer" || activePage === "WorkSession") && (
@@ -66,7 +62,6 @@ function App() {
             onDelete={handleDelete}
           />
         )}
-        {activePage === "Setting" && <Setting />}
       </main>
     </div>
   );
