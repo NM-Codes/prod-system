@@ -5,20 +5,27 @@
     align-items: center;
     height: 100%;
     padding: 2rem 1rem;
+    background: transparent;
 }
 
 .circle {
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 350px;
     border-radius: 50%;
     border: 8px solid transparent;
-    background: linear-gradient(white,white) padding-box,
-    linear-gradient(135deg, #DFE7FF, #6366F1) border-box;
+    background: linear-gradient(var(--color-bg-surface), var(--color-bg-surface)) padding-box,
+    linear-gradient(135deg, #9C4CFF, #415CFE) border-box;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 3rem;
     font-weight: bold;
-    color: #312e81;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    color: var(--color-text);
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-dark .circle {
+    background: linear-gradient(var(--color-bg-surface), var(--color-bg-surface)) padding-box,
+    linear-gradient(135deg, #9C4CFF, #415CFE) border-box;
 }

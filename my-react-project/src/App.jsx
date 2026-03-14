@@ -19,7 +19,7 @@ function App() {
   const [draftSession, setDraftSession] = useState(null);
   
   const { theme } = useTheme();
-  const themeChange = theme === 'light'? 'theme-toggle-dark' : 'theme-toggle-light';
+  const themeChange = theme === 'dark' ? 'theme-toggle-dark' : 'theme-toggle-light';
 
   useEffect(() => {
     localStorage.setItem("sessions", JSON.stringify(sessions));

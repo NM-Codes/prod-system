@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  /*Färgpalett*/
+  /*Färgpalett - Light Mode*/
   --color-bg: #f2f2f2;
   --color-bg-surface: #ffffff;
   --color-border-muted: #e5e7eb;
@@ -39,6 +39,32 @@
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode Variables */
+.theme-toggle-dark {
+  --color-bg: #1a1b2a;
+  --color-bg-surface: #2d2e45;
+  --color-border-muted: #404258;
+  --color-text: #ffffff;
+  --color-text-muted: #a0a0b8;
+  --color-accent: #3b82f6;
+  --color-orange: #FF9B49;
+  --color-blue: #2A7FFF;
+  --color-green: #6DD18C;
+  --color-gray: #9096A3;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Light Mode Color Variables */
+.theme-toggle-light {
+  --color-orange: #FF9B49;
+  --color-blue: #2A7FFF;
+  --color-green: #6DD18C;
+  --color-gray: #9096A3;
 }
 
 * {

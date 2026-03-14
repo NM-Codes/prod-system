@@ -3,12 +3,13 @@
 }
 
 h3 {
-  color: #495565;
+  color: var(--color-text);
 }
+
 .main-title,
 .subtitle {
   text-align: left;
-  color: #374151;
+  color: var(--color-text);
 }
 
 /* MODE BUTTONS */
@@ -25,29 +26,34 @@ width: 100%;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  border: 2px solid #E5E7EB;
-  border-radius: 12px;
-  background: white;
+  border: 2px solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 .mode-btn .mode-title {
   font-size: 1rem;  
   font-weight: 600;    
-  color: #4a4d50;     
+  color: var(--color-text);     
 }
 .sub-title{
   font-size: 0.9rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 .mode-btn.selected {
-  border-color: #6366f1;
-  background-color: #e0e7ff;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.mode-btn.selected .mode-title,
+.mode-btn.selected .sub-title {
+  color: white;
 }
 /* CONTAINERS */
 .session-start-container {
-  max-width: 750px; /* ändra bredden på cardsen om så behövs desktop*/
+  max-width: 750px;
   margin: 2rem auto;
   padding: 1.5rem;
   width: 100%;
@@ -68,7 +74,7 @@ width: 100%;
 
 .form-group label {
   font-weight: 450;
-  color: #374151;
+  color: var(--color-text);
   font-size: 1rem;
   text-align: left;
 }
@@ -76,16 +82,26 @@ width: 100%;
 .text-input {
   padding: 0.9rem 1.1rem;
   font-size: 1.05rem;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #f9fafb;
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  color: var(--color-text);
   transition: border-color 0.2s;
 }
 
 .text-input:focus {
   outline: none;
-  border-color: #6366f1;
+  border-color: var(--color-accent);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.theme-toggle-dark .text-input {
+  background: var(--color-bg);
+  border-color: var(--color-border-muted);
+}
+
+.theme-toggle-dark .text-input:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
  /* FOCUS BUTTONS */
 .focus-mode-buttons {
@@ -102,9 +118,9 @@ width: 100%;
   min-width: 150px; 
   max-width: 200px;
   padding: 0.7rem 0.3rem;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  background: white;
+  border: 2px solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -119,12 +135,12 @@ width: 100%;
 }
 .focus-btn .label {
   font-size: 1.05rem;
-  color: #374151;
+  color: var(--color-text);
   font-weight: bold;
 }
 .focus-btn .minutes {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 /* LÅS KORTEN VID TIMERN */
@@ -141,31 +157,69 @@ width: 100%;
 
 /* Aktiv fokusläge, visuell indikation styling */
 .timer-overlay {
-  background-color: #1a1b3ddc; 
-  border-radius: 12px;
+  background-color: rgba(26, 27, 45, 0.9); 
+  border-radius: var(--radius-md);
   text-align: center;
   z-index: 10;
   pointer-events: none;   
 }
 
-/* Texten som visar fokusläge och minuter */
 .running-indicator {
- 
   font-size: 1.3rem;
   font-weight: 600;
-  color: white;  /*Ändra denna färg när det är darkmode*/
-  background-color: (rgb(3, 3, 3),rgb(42, 39, 39)); /*Ändra denna färg när det är darkmode*/
+  color: white;
+  background-color: rgba(3, 3, 3, 0.8);
   padding: 0.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-toggle-dark .timer-overlay {
+  background-color: rgba(45, 46, 69, 0.9);
+}
+
+.theme-toggle-dark .running-indicator {
+  background-color: rgba(232, 232, 232, 0.924);
+  color: rgba(45, 46, 69, 0.9);
 }
 
  /*FÄRGER PÅ FOKUS KNAPPARNA*/
 
-.focus-btn.selected:nth-child(1){ border-color: #FF9B49; background-color: #f8f4f1;}
-.focus-btn.selected:nth-child(2){ border-color: #2A7FFF; background-color: #E5ECF4;}
-.focus-btn.selected:nth-child(3){ border-color: #6DD18C; background-color: #eefcf5;}
-.focus-btn.selected:nth-child(4){ border-color: #9096A3; background-color: #f0f1f4;}
+.focus-btn.selected:nth-child(1){ 
+  border-color: var(--color-orange); 
+  background-color: rgba(255, 155, 73, 0.1);
+}
+.focus-btn.selected:nth-child(1) .label,
+.focus-btn.selected:nth-child(1) .minutes {
+  color: var(--color-orange);
+}
+
+.focus-btn.selected:nth-child(2){ 
+  border-color: var(--color-blue); 
+  background-color: rgba(42, 127, 255, 0.1);
+}
+.focus-btn.selected:nth-child(2) .label,
+.focus-btn.selected:nth-child(2) .minutes {
+  color: var(--color-blue);
+}
+
+.focus-btn.selected:nth-child(3){ 
+  border-color: var(--color-green); 
+  background-color: rgba(109, 209, 140, 0.1);
+}
+.focus-btn.selected:nth-child(3) .label,
+.focus-btn.selected:nth-child(3) .minutes {
+  color: var(--color-green);
+}
+
+.focus-btn.selected:nth-child(4){ 
+  border-color: var(--color-gray); 
+  background-color: rgba(144, 150, 163, 0.1);
+}
+.focus-btn.selected:nth-child(4) .label,
+.focus-btn.selected:nth-child(4) .minutes {
+  color: var(--color-gray);
+}
 
 
 /* Container för knappar längst ner */
@@ -181,22 +235,36 @@ width: 100%;
 .timer-buttons-bottom button {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.1s ease, opacity 0.2s ease;
 }
 
-
 .timer-buttons-bottom button:hover {
   opacity: 0.85;
   transform: scale(1.03);
 }
 
-.startBtn, .resumeBtn{background-color: #135DFC;color: white;}
-.pausBtn{background-color: #E5E7EB; color: #0F1828;}
-.stopBtn{background-color: #E8000B; color: white;}
+.startBtn, .resumeBtn{
+  background-color: var(--color-accent);
+  color: white;
+}
+.pausBtn{
+  background-color: var(--color-bg-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-muted);
+}
+.stopBtn{
+  background-color: #dc2626;
+  color: white;
+}
+
+.theme-toggle-dark .pausBtn {
+  background-color: var(--color-bg);
+  border-color: var(--color-border-muted);
+}
 
 
 /* Tooltip under knapparna */
@@ -206,15 +274,22 @@ width: 100%;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: #fbe1e1;       /*Bakgrundsfärg för varnings box, ändra vid darkmode */
-  color: #e8000b;                  /* textfärg, ändra vid darkmode */
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0.5rem 0.75rem;         
-  border-radius: 8px;              
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+  border-radius: var(--radius-sm);              
+  box-shadow: var(--shadow-sm); 
   text-align: center;
   animation: fadeIn 0.3s ease-out;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.theme-toggle-dark .form-tooltip {
+  background-color: rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: white;
 }
 
 
