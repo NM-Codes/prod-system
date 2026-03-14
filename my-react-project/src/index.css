@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -10,6 +14,22 @@
   --color-text: #0f0f0f;
   --color-text-muted: #6b6b6b;
   --color-accent: #2563eb;
+  --color-notification-setting-green-600: #3ea24b;
+  --color-account-setting-blue: #EEF4FF;
+  --color-account-setting-dark: #1F2B49;
+  --color-account-setting-auth: #F6F9FF;
+  --color-card-dark-bg: #1f2937;
+  --color-card-dark-text:#f9fafb;
+  --color-card-dark-border: #374151;
+  --color-card-light-bg: #ffffff;
+  --color-card-light-text:#111827;
+  --color-card-light-border: #e5e7eb;
+  --color-tips-setting-bg: #EFFCF5;
+  --color-tips-setting-border: #B9F7CF;
+  --color-tips-setting-header: #065f46;
+
+
+
   
   /*Typografi*/
   --font-size-xs: 0.75rem; /* 12px */
@@ -99,21 +119,20 @@ main {
 /* theme dark mode and light mode */
 .theme-toggle-dark
 {
-    height: '100vh';
+    height: 100vh;
     margin: 0;
-    padding: '2rem';
+    padding: 2rem;
     background:linear-gradient(135deg, #151b2a 0%, #1d1b49 100%);
-    
     color:#fff;
-    transition: 'backgroundColor 0.3s ease';
+    transition: backgroundColor 0.3s ease;
 
 }
 .theme-toggle-light
 {
-    height: '100vh';
+    height: 100vh;
     margin: 0;
-    padding: '2rem';
+    padding: 2rem;
     background:linear-gradient(135deg, #f2f5ff 0%, #faf6fe 100%);
     color:#000;
-    transition: 'backgroundColor 0.3s ease';
+    transition: backgroundColor 0.3s ease;
 }
