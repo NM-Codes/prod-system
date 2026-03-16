@@ -1,5 +1,18 @@
 .card-wrapper {
-  margin-bottom: 1.5rem; 
+  margin-bottom: 1.5rem !important; 
+  gap: 1.5rem;
+}
+
+/* Säkerställ gaps mellan cards */
+.session-start-container > .card-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+/* Tailwind-säker gaps */
+.session-start-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 h3 {
