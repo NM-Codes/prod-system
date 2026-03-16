@@ -1,4 +1,4 @@
-import { useTheme } from '../../Contexts/ThemeContext.jsx';
+import { useTheme } from '../../Contexts/ThemeContext';
 import DarkModeButton from '../../assets/dark-mode-button.webp';
 import LightModeButton from '../../assets/light-mode-button.webp';
 

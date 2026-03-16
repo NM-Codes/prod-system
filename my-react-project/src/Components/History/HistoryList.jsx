@@ -3,6 +3,7 @@ import './HistoryList.css';
 import Card from "../Cards/Cards";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { useSettings } from "../../Contexts/SettingsContext";
 
 
 
@@ -24,6 +25,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 
 
 function HistoryList({ sessions, onEdit, onDelete }) {
+  const { energyLogging } = useSettings();
 
   const [editingId, setEditingId] = useState(null);
 
@@ -70,18 +72,21 @@ function HistoryList({ sessions, onEdit, onDelete }) {
             <div className="history-card-inner">
               <strong>{s.title}</strong>
               <p>{s.date} {s.startTime}–{s.endTime}</p>
-              <p>{s.category} | {s.sessionType} | Energi {s.energyLevel}</p>
-              <div className="history-actions-icons">
+              {/* only show type and energy if they have values */}
+              <p>
+                {s.category} | {s.sessionType}
+                {s.energyLevel > 0 && ` | Energi ${s.energyLevel}`}
+              </p>              <div className="history-actions-icons">
                 <button onClick={() => startEdit(s)}>
-                  <MdEdit/>
+                  <MdEdit />
                 </button>
                 <button onClick={() => onDelete(s.id)}>
-                  <RiDeleteBin5Line style={{color:"red"}}/>
+                  <RiDeleteBin5Line style={{ color: "red" }} />
                 </button>
               </div>
             </div>
           ) : (
-            <div> 
+            <div>
               <input value={draft.title} onChange={e => setDraft({ ...draft, title: e.target.value })} />
               <input type="date" value={draft.date} onChange={e => setDraft({ ...draft, date: e.target.value })} />
               <input type="time" step="1" value={draft.startTime} onChange={e => setDraft({ ...draft, startTime: e.target.value })} />
@@ -100,9 +105,12 @@ function HistoryList({ sessions, onEdit, onDelete }) {
                 <option>Paus</option>
               </select>
 
-              <select value={draft.energyLevel} onChange={e => setDraft({ ...draft, energyLevel: Number(e.target.value) })}>
-                {[1,2,3,4,5].map(n => <option key={n}>{n}</option>)}
-              </select>
+              {/*Only show energy level selector if energy logging is enabled in settings */}
+              {energyLogging && (
+                <select value={draft.energyLevel} onChange={e => setDraft({ ...draft, energyLevel: Number(e.target.value) })}>
+                  {[1, 2, 3, 4, 5].map(n => <option key={n}>{n}</option>)}
+                </select>
+              )}
 
               <button onClick={saveEdit}>Spara</button>
               <button onClick={() => setEditingId(null)}>Avbryt</button>
@@ -110,8 +118,8 @@ function HistoryList({ sessions, onEdit, onDelete }) {
           )}
         </Card>
       ))}
-    </div> 
-  ); 
-} 
+    </div>
+  );
+}
 
 export default HistoryList; 

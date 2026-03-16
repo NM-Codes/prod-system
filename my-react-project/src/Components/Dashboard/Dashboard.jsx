@@ -1,7 +1,7 @@
 import "./Dashboard.css"
 import Card from "../Cards/Cards"
 
-function Dashboard() {
+function Dashboard({ totalMinutes, goal, progress, sessionCount, averageEnergy }) {
   return (
     <div className="dashboard">
 
@@ -10,6 +10,7 @@ function Dashboard() {
         <h1>Dashboard</h1>
         <p>Snabb översikt över din produktivitet</p>
       </header>
+      
 
       {/* DEL 1 – IDAG */}
       <section className="dashboard-stats">
@@ -18,12 +19,14 @@ function Dashboard() {
             <div className="stat-row">
                 <div className="stat-group">
                     <span className="stat-title">Arbetstid</span>
-                    <span className="stat-value-blue">2h 15m</span>
+                    <span className="stat-value-blue">{totalMinutes} Min</span>
+                    <span >{Math.round(progress)}% av mål</span>
+
                 </div>
 
                 <div className="stat-group">
                     <span className="stat-title">Sessioner</span>
-                    <span className="stat-value-purple">4</span>
+                    <span className="stat-value-purple">{sessionCount}</span>
                 </div>
 
                 <div className="stat-group">
@@ -38,22 +41,22 @@ function Dashboard() {
       <section className="dashboard-stats">
         <Card>
           <span className="stat-title">Total tid</span>
-          <span className="stat-value">12h 30m</span>
+          <span className="stat-value">{totalMinutes}m</span>
         </Card>
 
         <Card>
           <span className="stat-title">Sessioner</span>
-          <span className="stat-value">0</span>
+          <span className="stat-value">{sessionCount}</span>
         </Card>
 
         <Card>
           <span className="stat-title">Snitt energi</span>
-          <span className="stat-value">0.0</span>
+          <span className="stat-value">{averageEnergy}</span>
         </Card>
 
         <Card>
           <span className="stat-title">Snitt/session</span>
-          <span className="stat-value">0m</span>
+          <span className="stat-value">{sessionCount > 0 ? Math.round(totalMinutes / sessionCount) : 0}m</span>
         </Card>
       </section>
 

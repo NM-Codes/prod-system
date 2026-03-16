@@ -1,9 +1,22 @@
+:root {
+  /* Light mode values */
+  --setting-icon-title: #1a1a1a; /* Blackish */
+}
+
+[data-theme='dark'] {
+  /* Dark mode values */
+  --setting-icon-title: #ffffff; 
+}
 .settings-container{
     max-width: 1000px;
     margin: 0 auto;
     padding: var(--space-md);
     text-align: left;
+    color: var(--color-card-dark-text);
 
+}
+.settings-container.dark {
+  color: var(--color-card-dark-text);
 }
 
 /*Disable Background Gradient set a light gray hover */
@@ -52,15 +65,13 @@
 .card-icon{
 margin-top: 0;
 text-align: left;
-color: var(--color-card-light-text);
-
+color: var(--setting-icon-title);
 }
 
 .card-text{
     margin-top: 0;
     text-align: left;
-    color: var(--color-card-light-text);
-
+color: var(--setting-icon-title);
 }
 
 /* ---Kontohantering---- */
@@ -158,7 +169,7 @@ color: var(--color-text);
     font-weight: 600; 
     margin: 0; 
     font-size: 0.95rem;
-    color: var(--color-text); 
+    color: var(--setting-icon-title);
 }
 .sub-label { 
     color: var(--color-text-muted);
@@ -294,13 +305,13 @@ color: var(--color-text);
 .productivity-icon{
 margin-top: 0;
 text-align: left;
-color: var(--color-card-light-text);
+color: var(--setting-icon-title);
 
 }
 .productivity-text{
     margin-top: 0;
     text-align: left;
-    color: var(--color-card-light-text);
+    color: var(--setting-icon-title);
 }
 
 .goal-input{
@@ -459,7 +470,11 @@ color: var(--color-card-light-text);
     align-items: flex-start;
     gap: 8px;
   }
+  
 }
 
+.save-container {
+  margin: 20px 0;
+}
 
 
