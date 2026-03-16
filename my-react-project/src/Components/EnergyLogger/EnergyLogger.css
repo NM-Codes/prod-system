@@ -1,24 +1,92 @@
+/* EnergyLogger.css – modern, rundad, tema-anpassad */
+
+
+
 .button-group {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem 0;
 }
 
 .button {
+  flex: 1;
+  max-width: 180px;
+  min-height: 100px;
+  padding: 1rem;
+  border: 2px solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  cursor: pointer;
+  transition: all 0.18s ease;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 0.7rem;
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text);
 }
+
+.button:hover  {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-toggle-dark .button {
+  background: rgba(45, 46, 69, 0.9);
+}
+
+.button:nth-child(1){border-color:#FB2C36;}
+.button:nth-child(2){border-color:#FF6900;}
+.button:nth-child(3){border-color:#8F97A3;}
+.button:nth-child(4){border-color:#00C851;}
+.button:nth-child(5){border-color:#2265f6;}
+
 
 .energy-level {
-  background-color: var(--color-accent);
-  color: var(--color-bg);
-  padding: var(--space-sm);
-  width: var(--space-lg);
-  height: var(--space-lg);
-  border-radius: var(--radius-pill);    
+  font-size: 2.5rem;
 }
 
-.energy-description {
-  flex-grow: 1;
+
+.selected-energy {
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  font-weight: 450;
+  font-size: 1rem;
+  background: rgba(182, 145, 33, 0.14); 
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
 }
+
+.theme-toggle-dark .selected-energy {
+  background: rgba(182, 145, 33, 0.2);
+}
+
+.selected-energy .energy-emoji {
+  font-size: 1.8rem; 
+  vertical-align: middle; 
+  margin-left: 0.3rem;  
+}
+
+
+@media (max-width: 600px) {
+  .button-group {
+    gap: 0.2rem;
+  }
+  .button {
+    max-width: 80px;
+    height: 40px;
+    font-size: 0.9rem;
+    padding: 0.1rem 0 0.8rem 0;
+    margin: 0;
+    gap: 0.1rem;
+  }
+
+  
+}
+

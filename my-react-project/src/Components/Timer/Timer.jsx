@@ -1,93 +1,128 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Timer.module.css";
 
+function Timer({ focusMinutes, onStart, onStop, control }) {
 
-/*
-  Timer ansvarar ENBART för:
-  - tidräkning
-  - start / stop / reset
-  - export av start + stop tid via onStop
-*/
-
-function Timer({ onStop }) {
   const [milliseconds, setMilliseconds] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
 
-  //useRef används för att överleva re-renders
   const intervalRef = useRef(null);
   const startTimestampRef = useRef(null);
 
-  //Omvandlar ms till format hh:mm:ss
+  const durationMs = focusMinutes ? focusMinutes * 60000 : null;
+
+  /* VISA TID */
   const time = {
-    hours: Math.floor(milliseconds / 3600000),
-    minutes: Math.floor(milliseconds / 60000) % 60,
+    minutes: Math.floor(milliseconds / 60000),
     seconds: Math.floor(milliseconds / 1000) % 60,
   };
 
-  //START
+  /* START */
   function handleStart() {
-    if (isRunning) return; //skydd mot dubbel-start
 
     if (!startTimestampRef.current) {
       startTimestampRef.current = new Date();
     }
 
-    setIsRunning(true);
+    setMilliseconds(0);
+
+    intervalRef.current = setInterval(() => {
+
+      setMilliseconds((prev) => {
+
+        const newTime = prev + 1000;
+
+        /* STOPP VID VALD TID */
+        if (durationMs && newTime >= durationMs) {
+          clearInterval(intervalRef.current);
+
+          handleStop();
+
+          return durationMs;
+        }
+
+        return newTime;
+      });
+
+    }, 1000);
+
+    if (onStart) onStart();
   }
 
-  //STOP
-  function handleStop() {
-    if (!isRunning) return;
+  /* PAUS */
+  function handlePause() {
+    clearInterval(intervalRef.current);
+  }
 
-    setIsRunning(false);
+  /* FORTSÄTT */
+  function handleResume() {
+
+    intervalRef.current = setInterval(() => {
+
+      setMilliseconds((prev) => {
+
+        const newTime = prev + 1000;
+
+        if (durationMs && newTime >= durationMs) {
+          clearInterval(intervalRef.current);
+          handleStop();
+          return durationMs;
+        }
+
+        return newTime;
+      });
+
+    }, 1000);
+  }
+
+  /* STOPP */
+  function handleStop() {
+
+    clearInterval(intervalRef.current);
 
     const endTimestamp = new Date();
     const startTimestamp = startTimestampRef.current;
 
     if (!startTimestamp) return;
 
-    onStop({
-      date: startTimestamp.toISOString().split("T")[0],
-      startTime: startTimestamp.toLocaleTimeString("sv-SE"),
-      endTime: endTimestamp.toLocaleTimeString("sv-SE"),
-    });
-  }
+    if (onStop) {
+      onStop({
+        startTimestamp: startTimestamp.getTime(),
+        endTimestamp: endTimestamp.getTime(),
+      });
+    }
 
-  //RESET
-  function handleReset() {
-    setIsRunning(false);
     setMilliseconds(0);
     startTimestampRef.current = null;
   }
 
-  //Logik för timer räkningen
+  /* WORKSESSION KONTROLLERAR TIMER */
   useEffect(() => {
-    if (!isRunning) {
-      clearInterval(intervalRef.current);
-      return;
-    }
 
-    intervalRef.current = setInterval(() => {
-      setMilliseconds((prev) => prev + 1000);
-    }, 1000);
+    if (!control) return;
 
+    if (control === "start") handleStart();
+    if (control === "pause") handlePause();
+    if (control === "resume") handleResume();
+    if (control === "stop") handleStop();
+
+  }, [control]);
+
+  /* CLEANUP */
+  useEffect(() => {
     return () => clearInterval(intervalRef.current);
-  }, [isRunning]);
+  }, []);
 
   return (
+
     <div className={styles.timer}>
-      <div className="time-display">
-        {String(time.hours).padStart(2, "0")}:
+
+      <div className={styles.circle}>
         {String(time.minutes).padStart(2, "0")}:
         {String(time.seconds).padStart(2, "0")}
       </div>
 
-      <div className={styles.buttons}>
-        <button onClick={handleStart}>Start</button>
-        <button onClick={handleStop}>Stop</button>
-        <button onClick={handleReset}>Reset</button>
-      </div>
     </div>
+
   );
 }
 

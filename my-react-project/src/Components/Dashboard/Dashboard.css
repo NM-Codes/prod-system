@@ -12,7 +12,7 @@
 }
 
 .dashboard-header p {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   font-size: 0.95rem;
 }
 
@@ -45,7 +45,7 @@
 
 .stat-title {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin-bottom: 0.25rem;
 }
 
@@ -95,11 +95,11 @@
 .chart-placeholder {
     height: 240px;
     border-radius: 10px;
-    background: var(--bg-soft);
+    background: var(--color-bg);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
 }
 
 /* LISTOR */
@@ -113,12 +113,12 @@
 .session-list li,
 .start-list li {
     padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-border-muted);
     font-size: 0.9rem;
 }
 
 .empty-text {
-    color: var(--text-muted);
+    color: var(--color-text-muted);
 }
 
 

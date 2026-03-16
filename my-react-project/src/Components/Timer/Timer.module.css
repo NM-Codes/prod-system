@@ -1,3 +1,31 @@
-.buttons button {
-    color: black;
+.timer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 2rem 1rem;
+    background: transparent;
+}
+
+.circle {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    background: linear-gradient(var(--color-bg-surface), var(--color-bg-surface)) padding-box,
+    linear-gradient(135deg, #9C4CFF, #415CFE) border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--color-text);
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-dark .circle {
+    background: linear-gradient(var(--color-bg-surface), var(--color-bg-surface)) padding-box,
+    linear-gradient(135deg, #9C4CFF, #415CFE) border-box;
 }

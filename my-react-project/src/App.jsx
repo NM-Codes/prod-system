@@ -1,25 +1,26 @@
 import { useState } from 'react';
 import './App.css';
+import './index.css';
 import Header from './Components/Header/Header';
 import DashboardPage from './pages/DashboardPage.jsx';
-import TimerPage from "./pages/Timer";
-import WorkSession from "./pages/WorkSessionpage.jsx";
+import WorkSessionPage from './pages/WorkSessionpage.jsx';
 import HistoryPage from "./pages/History";
-import Setting from './pages/Setting.jsx';
-import { useTheme } from './Contexts/ThemeContext.jsx'
+import { ThemeProvider, useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSettings } from './Contexts/SettingsContext.jsx';
+
 
 
 function App() {
   const navigate = useNavigate(); // Used to redirect the user programmatically 
 
   // const [activePage, setActivePage] = useState("Dashboard"); //we don't need any more. we use react router.
-const { sessions, setSessions } = useSettings();  const [draftSession, setDraftSession] = useState(null);
+const { sessions, setSessions } = useSettings();  
+const [draftSession, setDraftSession] = useState(null);
   
   const { theme } = useTheme();
-  const themeChange = theme === 'light'? 'theme-toggle-dark' : 'theme-toggle-light';
+  const themeChange = theme === 'dark' ? 'theme-toggle-dark' : 'theme-toggle-light';
 
   // useEffect(() => {
   //   localStorage.setItem("sessions", JSON.stringify(sessions));
@@ -54,6 +55,16 @@ const { sessions, setSessions } = useSettings();  const [draftSession, setDraftS
 
         {activePage === "Session" && (
           <WorkSession
+
+      <Header changePage={setActivePage} activePage={activePage} />
+
+      <main>
+        {activePage === "Dashboard" && <DashboardPage />}
+       
+
+        {(activePage === "Timer" || activePage === "WorkSession") && (
+          <WorkSessionPage
+
             initialSession={draftSession}
             onSave={(session) => {
               setSessions(prev => [...prev, session]);
@@ -62,7 +73,6 @@ const { sessions, setSessions } = useSettings();  const [draftSession, setDraftS
             }}
           />
         )}
-
         {activePage === "History" && (
           <HistoryPage
             sessions={sessions}

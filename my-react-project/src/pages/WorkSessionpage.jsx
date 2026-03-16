@@ -1,17 +1,7 @@
 import WorkSession from "../Components/WorkSession/WorkSession";
 import "../Components/WorkSession/WorkSession.css";
 
-// export default function WorkSessionPage() {
-//   const handleStartSession = (sessionData) => {
-//     console.log("Starting session:", sessionData);
-//   };
 
-//   return (
-//     <div>
-//       <WorkSession onStart={handleStartSession} />
-//     </div>
-//   );
-// }
 
 export default function WorkSessionPage({ initialSession, onSave }) {
   
@@ -21,6 +11,11 @@ export default function WorkSessionPage({ initialSession, onSave }) {
         initialSession={initialSession} 
         onSave={onSave} 
       />
-    </div>
+
+          //export default function WorkSessionPage({ initialSession, onSave }) {
+  //return (
+    //<div>
+      //<WorkSession initialSession={initialSession} onSave={onSave} />
+    //</div>
   );
 }
