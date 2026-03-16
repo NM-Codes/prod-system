@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import "./Pomodoro.css";
 import Card from "../Cards/Cards";
 import PomodoroSettings from "./PomodoroSettings";
@@ -75,46 +75,7 @@ function Pomodoro({ navigate }) {
 
   const intervalRef = useRef(null);
 
-  // Uppdatera timeLeft när workMinutes ändras
-  useEffect(() => {
-    if (currentPhase === "work" && !isRunning) {
-      setTimeLeft(workMinutes * 60);
-    }
-  }, [workMinutes, currentPhase, isRunning]);
-
-  useEffect(() => {
-    if (currentPhase === "break" && !isRunning) {
-      setTimeLeft(breakMinutes * 60);
-    }
-  }, [breakMinutes, currentPhase, isRunning]);
-
-  useEffect(() => {
-    if (currentPhase === "longBreak" && !isRunning) {
-      setTimeLeft(longBreakMinutes * 60);
-    }
-  }, [longBreakMinutes, currentPhase, isRunning]);
-
-  // Timer-logik
-  useEffect(() => {
-    if (isRunning && !isPaused) {
-      intervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            // Timer färdig - byt fas
-            handlePhaseComplete();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    } else {
-      clearInterval(intervalRef.current);
-    }
-
-    return () => clearInterval(intervalRef.current);
-  }, [isRunning, isPaused]);
-
-  const handlePhaseComplete = () => {
+  const handlePhaseComplete = useCallback(() => {
     // Spela ljud eller notifikation här
     setIsRunning(false);
     setIsPaused(false);
@@ -135,7 +96,27 @@ function Pomodoro({ navigate }) {
       setCurrentPhase("work");
       setTimeLeft(workMinutes * 60);
     }
-  };
+  }, [currentPhase, sessions, workMinutes, breakMinutes, longBreakMinutes]);
+
+  // Timer-logik
+  useEffect(() => {
+    if (isRunning && !isPaused) {
+      intervalRef.current = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            // Timer färdig - byt fas
+            handlePhaseComplete();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [isRunning, isPaused, handlePhaseComplete]);
 
   const handleStart = () => {
     setIsRunning(true);
