@@ -4,6 +4,7 @@ import './index.css';
 import Header from './Components/Header/Header';
 import DashboardPage from './pages/DashboardPage.jsx';
 import WorkSessionPage from './pages/WorkSessionpage.jsx';
+import PomodoroPage from './pages/PomodoroPage.jsx';
 import HistoryPage from "./pages/History";
 import { ThemeProvider, useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
@@ -60,7 +61,8 @@ const [draftSession, setDraftSession] = useState(null);
 
       <main>
         {activePage === "Dashboard" && <DashboardPage />}
-       
+        
+        {activePage === "Pomodoro" && <PomodoroPage navigate={(page) => setActivePage(page)} />}
 
         {(activePage === "Timer" || activePage === "WorkSession") && (
           <WorkSessionPage
@@ -71,6 +73,7 @@ const [draftSession, setDraftSession] = useState(null);
               setDraftSession(null);
               setActivePage("History");
             }}
+            navigate={(page) => setActivePage(page)}
           />
         )}
         {activePage === "History" && (

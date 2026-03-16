@@ -70,7 +70,6 @@ position: relative;
 }
 
 .focus-group.active {
-  border-color: var(--color-accent);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
@@ -123,12 +122,10 @@ position: relative;
 .duration-chip.selected {
   background: var(--accent);
   color: rgb(0, 0, 0);
-  border-color: var(--accent);
   font-weight: 600;
 }
 
 .duration-chip.recommended {
-  border-color: var(--accent);
   background: rgba(var(--accent-rgb, 139 92 246), 0.1);
   font-weight: 600;
 }

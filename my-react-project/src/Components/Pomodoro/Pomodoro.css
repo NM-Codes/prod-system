@@ -1,0 +1,281 @@
+/* Importera WorkSession styles för identiskt utseende */
+@import "../WorkSession/WorkSession.css";
+
+/* Pomodoro-specifika styles */
+.focus-time-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+
+.focus-time-value {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.focus-time-label {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.settings-header h3 {
+  color: var(--color-text);
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.settings-toggle {
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settings-toggle:hover {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+}
+
+.settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.setting-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.setting-group label {
+  font-weight: 500;
+  color: var(--color-text);
+  flex: 1;
+}
+
+.setting-group input {
+  width: 80px;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  color: var(--color-text);
+  text-align: center;
+  font-size: 1rem;
+}
+
+.setting-group input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.setting-group input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.timer-display {
+  margin: 2rem 0;
+}
+
+.timer-circle {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  border: 8px solid #FF6B6B;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-lg);
+  transition: border-color 0.3s ease;
+  position: relative;
+}
+
+.timer-time {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.timer-phase-text {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.control-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.control-buttons button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.btn-start {
+  background: var(--color-accent);
+  color: white;
+}
+
+.btn-start:hover {
+  background: #1D4ED8;
+  transform: translateY(-2px);
+}
+
+.btn-pause {
+  background: #E5E7EB;
+  color: #111828;
+}
+
+.btn-pause:hover {
+  background: #D1D5DB;
+  transform: translateY(-2px);
+}
+
+.btn-resume {
+  background: var(--color-accent);
+  color: white;
+}
+
+.btn-resume:hover {
+  background: #1D4ED8;
+  transform: translateY(-2px);
+}
+
+.btn-stop {
+  background: #EF4444;
+  color: white;
+}
+
+.btn-stop:hover {
+  background: #DC2626;
+  transform: translateY(-2px);
+}
+
+.progress-section {
+  margin: 2rem 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--color-border-muted);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 1s linear;
+  border-radius: var(--radius-pill);
+}
+
+.session-counter {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Dark Mode */
+.theme-toggle-dark .setting-group input {
+  background: var(--color-bg);
+}
+
+.theme-toggle-dark .timer-circle {
+  background: var(--color-bg-surface);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timer-circle {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .timer-time {
+    font-size: 2.5rem;
+  }
+  
+  .timer-phase-text {
+    font-size: 0.9rem;
+  }
+  
+  .control-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .control-buttons button {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .setting-group input {
+    width: 100%;
+  }
+  
+  .focus-time-value {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timer-circle {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .timer-time {
+    font-size: 2rem;
+  }
+  
+  .timer-phase-text {
+    font-size: 0.8rem;
+  }
+  
+  .control-buttons button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .focus-time-value {
+    font-size: 2rem;
+  }
+}

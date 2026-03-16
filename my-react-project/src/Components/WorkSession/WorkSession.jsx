@@ -6,15 +6,9 @@ import Card from "../Cards/Cards";
 import SettingsTimer from "./SettingsTimer";
 import './WorkSession.css';
 
-/*
-  WorkSession
-  ------------
-  Formulär för att skapa EN session
-  - Kan komma från Timer (auto-fylld tid)
-  - Kan användas manuellt (failsafe)
-*/
 
-export default function WorkSession({initialSession, onSave }) {
+export default function WorkSession({ initialSession, onSave, navigate }) {
+
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [focusMode, setFocusMode] = useState('');
@@ -228,7 +222,7 @@ export default function WorkSession({initialSession, onSave }) {
             </button>
             <button
               className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`}
-              onClick={() => setMode('pomodoro')}
+              onClick={() => navigate && navigate("Pomodoro")}
             >
               <span className="mode-title">Pomodoro Timer</span>
               <span className="sub-title">Fokus + pauser</span>
