@@ -6,7 +6,7 @@ import SettingsTimer from "./SettingsTimer";
 import './WorkSession.css';
 
 
-export default function WorkSession({ onSave }) {
+export default function WorkSession({ onSave, navigate }) {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [focusMode, setFocusMode] = useState('');
@@ -95,7 +95,7 @@ export default function WorkSession({ onSave }) {
             </button>
             <button
               className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`}
-              onClick={() => setMode('pomodoro')}
+              onClick={() => navigate && navigate("Pomodoro")}
             >
               <span className="mode-title">Pomodoro Timer</span>
               <span className="sub-title">Fokus + pauser</span>
