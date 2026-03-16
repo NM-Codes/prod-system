@@ -12,6 +12,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSettings } from './Contexts/SettingsContext.jsx';
 import TimerPage from './pages/Timer.jsx';
 import Setting from './pages/Setting.jsx';
+import AnalysisPage from './pages/Analysis.jsx';
+
 
 
 
@@ -71,6 +73,8 @@ const [draftSession, setDraftSession] = useState(null);
 
           <Route path="/pomodoro" element={<PomodoroPage />} />
 
+          
+
           <Route path="/history" element={
             <HistoryPage
               sessions={sessions}
@@ -80,6 +84,8 @@ const [draftSession, setDraftSession] = useState(null);
           } />
 
           <Route path="/setting" element={<Setting />} />
+
+          <Route path="/analysis" element={<AnalysisPage sessions={sessions} />} />
           
           {/* Fallback for 404 - redirects to dashboard if path doesn't exist */}
           <Route path="*" element={<DashboardPage />} />
