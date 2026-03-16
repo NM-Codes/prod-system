@@ -10,7 +10,7 @@ import { ThemeProvider, useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSettings } from './Contexts/SettingsContext.jsx';
-import TimerPage from './pages/TimerPage.jsx';
+import TimerPage from './pages/Timer.jsx';
 import Setting from './pages/Setting.jsx';
 
 
