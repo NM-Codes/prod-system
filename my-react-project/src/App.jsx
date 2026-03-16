@@ -10,6 +10,8 @@ import { ThemeProvider, useTheme } from './Contexts/ThemeContext.jsx'
 import ThemeToggle from './Components/ThemeToggle/ThemeToggle.jsx'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSettings } from './Contexts/SettingsContext.jsx';
+import TimerPage from './pages/TimerPage.jsx';
+import Setting from './pages/Setting.jsx';
 
 
 
@@ -41,57 +43,14 @@ const [draftSession, setDraftSession] = useState(null);
       <div className={`body-container ${themeChange}`}>
       {/* toggle theme color */}
            
-      {/* <Header changePage={setActivePage} activePage={activePage} /> */}
       <Header /> {/* new change for react router dom */}
-
-      {/* <main>
-        {activePage === "Timer" && (
-          <TimerPage
-            onStop={(data) => {
-              setDraftSession(data);
-              setActivePage("Session");
-            }}
-          />
-        )}
-
-        {activePage === "Session" && (
-          <WorkSession
-
-      <Header changePage={setActivePage} activePage={activePage} />
-
-      <main>
-        {activePage === "Dashboard" && <DashboardPage />}
-        
-        {activePage === "Pomodoro" && <PomodoroPage navigate={(page) => setActivePage(page)} />}
-
-        {(activePage === "Timer" || activePage === "WorkSession") && (
-          <WorkSessionPage
-
-            initialSession={draftSession}
-            onSave={(session) => {
-              setSessions(prev => [...prev, session]);
-              setDraftSession(null);
-              setActivePage("History");
-            }}
-            navigate={(page) => setActivePage(page)}
-          />
-        )}
-        {activePage === "History" && (
-          <HistoryPage
-            sessions={sessions}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
-        )}
-        {activePage === "Setting" && <Setting />}
-      </main> */}
 
       <main> 
       <Routes>
           <Route path="/" element={<DashboardPage />} />
           
           <Route path="/timer" element={
-            <TimerPage
+            <WorkSessionPage
               onStop={(data) => {
                 setDraftSession(data);
                 navigate("/session"); 
@@ -100,7 +59,7 @@ const [draftSession, setDraftSession] = useState(null);
           } />
 
           <Route path="/session" element={
-            <WorkSession
+            <WorkSessionPage
               initialSession={draftSession}
               onSave={(newSession) => {
                 setSessions(prev => [...prev, newSession]);
@@ -109,6 +68,8 @@ const [draftSession, setDraftSession] = useState(null);
               }}
             />
           } />
+
+          <Route path="/pomodoro" element={<PomodoroPage />} />
 
           <Route path="/history" element={
             <HistoryPage
