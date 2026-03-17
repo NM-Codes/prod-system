@@ -1,9 +1,10 @@
-/* Grundstil för hela ytan */
 .search-filter-wrapper {
   width: 100%;
   padding: var(--space-lg);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border-muted);
+  background-color: var(--color-bg-surface);
+  color: var(--color-text);
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
@@ -75,15 +76,14 @@
   border: none;
   outline: none;
   background: transparent;
-  color: inherit; /* Tar färg från .filter-light/dark */
+  color: inherit; 
   font-size: var(--font-size-sm);
   cursor: pointer;
 }
 
-/* Säkerställer att texten i dropdown-menyn syns */
 .filter-select option {
-    background-color: #1f2937;
-    color: #f9fafb;
+  background-color: var(--color-bg-surface);
+  color: var(--color-text);
 }
 
 .filter-light .filter-select option {
@@ -92,6 +92,6 @@
 }
 
 .filter-dark .history-filter-container {
-  background-color: rgba(255, 255, 255, 0.05); /* 5% vitt lager gör den subtilt ljusare */
+  background-color: rgba(255, 255, 255, 0.05);
   border-color: var(--color-border-muted);
 }
