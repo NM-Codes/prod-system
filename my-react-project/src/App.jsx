@@ -53,9 +53,10 @@ const [draftSession, setDraftSession] = useState(null);
           
           <Route path="/timer" element={
             <WorkSessionPage
-              onStop={(data) => {
-                setDraftSession(data);
-                navigate("/session"); 
+              onSave={(newSession) => {
+                setSessions(prev => [...prev, newSession]);
+                setDraftSession(null);
+                navigate("/history"); 
               }}
             />
           } />
