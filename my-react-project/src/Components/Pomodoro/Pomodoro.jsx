@@ -175,45 +175,18 @@ function Pomodoro({ navigate }) {
 
   return (
     <div className="session-start-container">
-      <h1 className="main-title">Timer</h1>
-      <p className="subtitle">Välj timer-läge och spåra din tid</p>
-
-      {/* Timerläge Card - Identisk med WorkSession */}
-      <Card className="card-wrapper">
-        <div className="timer-content">
-          <div className="modes">
-            <button
-              className={`mode-btn ${mode === 'normal' ? 'selected' : ''}`}
-              onClick={() => navigate && navigate("Timer")}
-            >
-              <span className="mode-title">Normal Timer</span>
-              <span className="sub-title">Flexibel tidsspårning</span>
-            </button>
-            <button
-              className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`}
-              onClick={() => setMode('pomodoro')}
-            >
-              <span className="mode-title">Pomodoro Timer</span>
-              <span className="sub-title">Fokus + pauser</span>
-            </button>
-          </div>
-        </div>
-      </Card>
-
-      {/* Pomodoro Faser Card - Istället för "välj fokusläge" */}
+      {/* Pomodoro Faser Card */}
       <Card className="card-wrapper focus">
         <div className={`timer-content ${isRunning ? 'locked' : ''}`}>
           <div className="focus-header">
             <h3>Välj Pomodoro-fas</h3>
           </div>
-        <div className="timer-content">
           <PomodoroSettings
             onSave={handleSettingsSave}
             workMinutes={workMinutes}
             breakMinutes={breakMinutes}
             longBreakMinutes={longBreakMinutes}
           />
-        </div>
 
           <div className="focus-mode-buttons">
             {phaseOptions.map((option) => (
@@ -232,7 +205,6 @@ function Pomodoro({ navigate }) {
         </div>
       </Card>
 
-    
       {/* Timer Ring Card */}
       <Card className="card-wrapper timer">
         <div className="timer-display">
@@ -271,7 +243,6 @@ function Pomodoro({ navigate }) {
             </button>
           )}
         </div>
-
       </Card>
     </div>
   );

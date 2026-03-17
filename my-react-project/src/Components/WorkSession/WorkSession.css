@@ -1,6 +1,9 @@
 .card-wrapper {
   margin-bottom: 1.5rem !important; 
   gap: 1.5rem;
+  width: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Säkerställ gaps mellan cards */

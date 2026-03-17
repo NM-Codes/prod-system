@@ -4,6 +4,8 @@ import EnergyLogger from "../EnergyLogger/EnergyLogger";
 import { useSettings } from "../../Contexts/SettingsContext";
 import Card from "../Cards/Cards";
 import SettingsTimer from "./SettingsTimer";
+import Pomodoro from "../Pomodoro/Pomodoro";
+import PomodoroSettings from "../Pomodoro/PomodoroSettings";
 import './WorkSession.css';
 
 
@@ -15,7 +17,7 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
   const [focusEmoji, setFocusEmoji] = useState('');
   const [focusMinutes, setFocusMinutes] = useState(null);
   const [energyLevel, setEnergyLevel] = useState(undefined);
-  const [mode, setMode] = useState('normal');
+  const [mode, setMode] = useState('normal'); // 'normal' eller 'pomodoro'
   const [timerControl, setTimerControl] = useState(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -113,6 +115,11 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
       onSave(session);
     }
 
+    // Omdirigera till History sidan
+    if (typeof navigate === 'function') {
+      navigate("/history");
+    }
+
     // Återställ allt
     setTitle('');
     setCategory('');
@@ -170,188 +177,218 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
       <h1 className="main-title">Timer</h1>
       <p className="subtitle">Starta ditt arbetspass och spåra din tid</p>
 
-      {/* Timerläge */}
-      <Card className="card-wrapper">
-        <div className={`timer-content ${isTimerRunning ? 'locked' : ''}`}>
-          <div className="modes">
-            <button
-              className={`mode-btn ${mode === 'normal' ? 'selected' : ''}`}
-              onClick={() => setMode('normal')}
-            >
-              <span className="mode-title">Normal Timer</span>
-              <span className="sub-title">Flexibel tidsspårning</span>
-            </button>
-            <button
-              className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`}
-              onClick={() => navigate && navigate("Pomodoro")}
-            >
-              <span className="mode-title">Pomodoro Timer</span>
-              <span className="sub-title">Fokus + pauser</span>
-            </button>
-          </div>
-        </div>
-      </Card>
-
-      {/* Fokusläge + Settings */}
-      <Card className="card-wrapper focus">
-        <div className={`timer-content ${isTimerRunning ? 'locked' : ''}`}>
-          <div className="focus-header">
-            <h3>Välj fokusläge</h3>
-            <SettingsTimer
-              onSave={handleSettingsSave}
-              initialFocusOptions={focusOptions}
-            />
-          </div>
-
-          <div className="focus-mode-buttons">
-            {focusOptions.map((option) => (
-              <button
-                key={option.label}
-                className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
-                onClick={() => {
-                  setFocusMode(option.label);
-                  setFocusEmoji(option.emoji);
-                  setFocusMinutes(option.minutes);
-                }}
-              >
-                <span className="emoji">{option.emoji}</span>
-                <span className="label">{option.label}</span>
-                <span className="minutes">{option.minutes} min</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </Card>
-
-      {/* Timer + formulär */}
-      <Card className="card-wrapper timer">
-        <Timer
-  focusMinutes={focusMinutes}
-  onStart={() => setIsTimerRunning(true)}
-  onStop={(data) => {
-    handleTimerComplete(data);
-    setIsTimerRunning(false);
-    setIsPaused(false);
-    setTimerControl(null);
-  }}
-  control={timerControl}
-/>
-
-    {/* Visuell indikation på vald fokusläge */}
-        {isTimerRunning && focusMode && (
-          <div className="timer-overlay">
-            <div className="running-indicator">
-              {focusEmoji} {focusMode} - ⏱️ {focusMinutes} min
+      {/* Normal Timer - 3 separata cards */}
+      {mode === 'normal' && (
+        <>
+          {/* Card 1: Timer-väljare */}
+          <Card className="card-wrapper">
+            <div className="timer-content">
+              <div className="modes">
+                <button
+                  className={`mode-btn ${mode === 'normal' ? 'selected' : ''}`}
+                  onClick={() => setMode('normal')}
+                >
+                  <span className="mode-title">Normal Timer</span>
+                  <span className="sub-title">Flexibel tidsspårning</span>
+                </button>
+                <button
+                  className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`}
+                  onClick={() => setMode('pomodoro')}
+                >
+                  <span className="mode-title">Pomodoro Timer</span>
+                  <span className="sub-title">Fokus + pauser</span>
+                </button>
+              </div>
             </div>
-          </div>
-        )}
-        <div className={`timer-content ${isTimerRunning ? 'locked' : ''}`}>
-          <div className="form-group">
-            <label htmlFor="title">Titel</label>
-            <input
-              id="title"
-              type="text"
-              placeholder="Vad arbetar du med?"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="text-input"
-            />
-          </div>
+          </Card>
 
-          <div className="form-group">
-            <label htmlFor="category">Kategori</label>
-            <input
-              id="category"
-              type="text"
-              placeholder="T.ex. Projekt, Studier, Möte"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="text-input"
-            />
-          </div>
+          {/* Card 2: Välj fokusläge */}
+          <Card className="card-wrapper focus">
+            <div className={`timer-content ${isTimerRunning ? 'locked' : ''}`}>
+              <div className="focus-header">
+                <h3>Välj fokusläge</h3>
+                <SettingsTimer
+                  onSave={handleSettingsSave}
+                  initialFocusOptions={focusOptions}
+                />
+              </div>
 
-          <EnergyLogger onLevelSelect={setEnergyLevel} />
-        </div>
+              <div className="focus-mode-buttons">
+                {focusOptions.map((option) => (
+                  <button
+                    key={option.label}
+                    className={`focus-btn ${focusMode === option.label ? 'selected' : ''}`}
+                    onClick={() => {
+                      setFocusMode(option.label);
+                      setFocusEmoji(option.emoji);
+                      setFocusMinutes(option.minutes);
+                    }}
+                  >
+                    <span className="emoji">{option.emoji}</span>
+                    <span className="label">{option.label}</span>
+                    <span className="minutes">{option.minutes} min</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </Card>
 
-        {/* Start / Paus / Fortsätt / Stop */}
-        <div className="timer-buttons-bottom">
-          {!isTimerRunning && !isPaused && isFormValid && (
-            <button
-              className="startBtn"
-              disabled={!isFormValid}
-              onClick={() => {
-                setTimerControl("start");
-                setIsTimerRunning(true);
+          {/* Card 3: Timer + formulär */}
+          <Card className="card-wrapper timer">
+            <Timer
+              focusMinutes={focusMinutes}
+              onStart={() => setIsTimerRunning(true)}
+              onStop={(data) => {
+                handleTimerComplete(data);
+                setIsTimerRunning(false);
+                setIsPaused(false);
+                setTimerControl(null);
               }}
-            >
-              ▶ Start
-            </button>
-          )}
+              control={timerControl}
+            />
 
-          {isTimerRunning && (
-            <>
-              <button
-                className="pauseBtn"
-                onClick={() => {
-                  setTimerControl("pause");
-                  setIsTimerRunning(false);
-                  setIsPaused(true);
-                }}
-              >
-                ⏸ Paus
-              </button>
+            {/* Visuell indikation på vald fokusläge */}
+            {isTimerRunning && focusMode && (
+              <div className="timer-overlay">
+                <div className="running-indicator">
+                  {focusEmoji} {focusMode} - ⏱️ {focusMinutes} min
+                </div>
+              </div>
+            )}
+            <div className={`timer-content ${isTimerRunning ? 'locked' : ''}`}>
+              <div className="form-group">
+                <label htmlFor="title">Titel</label>
+                <input
+                  id="title"
+                  type="text"
+                  placeholder="Vad arbetar du med?"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="text-input"
+                />
+              </div>
 
-              <button
-                className="stopBtn"
-                onClick={() =>
-                  handleTimerComplete({
-                    startTimestamp: Date.now() - 1000,
-                    endTimestamp: Date.now(),
-                  })
-                }
-              >
-                ⏹ Stopp & Spara
-              </button>
-            </>
-          )}
+              <div className="form-group">
+                <label htmlFor="category">Kategori</label>
+                <input
+                  id="category"
+                  type="text"
+                  placeholder="T.ex. Projekt, Studier, Möte"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="text-input"
+                />
+              </div>
 
-          {isPaused && (
-            <>
-              <button
-                className="resumeBtn"
-                onClick={() => {
-                  setTimerControl("resume");
-                  setIsTimerRunning(true);
-                  setIsPaused(false);
-                }}
-              >
-                ▶ Fortsätt
-              </button>
+              <EnergyLogger onLevelSelect={setEnergyLevel} />
+            </div>
 
-              <button
-                className="stopBtn"
-                onClick={() =>
-                  handleTimerComplete({
-                    startTimestamp: Date.now() - 1000,
-                    endTimestamp: Date.now(),
-                  })
-                }
-              >
-                ⏹ Stopp & Spara
-              </button>
-            </>
-          )}
-        </div>
+            {/* Start / Paus / Fortsätt / Stop */}
+            <div className="timer-buttons-bottom">
+              {!isTimerRunning && !isPaused && isFormValid && (
+                <button
+                  className="startBtn"
+                  disabled={!isFormValid}
+                  onClick={() => {
+                    setTimerControl("start");
+                    setIsTimerRunning(true);
+                  }}
+                >
+                  ▶ Start
+                </button>
+              )}
 
-        {/* Tooltip om formulär ej klart */}
-        {!isFormValid && (
-          <p className="form-tooltip">
-            {focusMode === "" && "Välj fokusläge! "} <br />
-            {title.trim() === "" && "Ange en titel. "} <br />
-            {energyLevel === undefined && "Välj energinivå."}
-          </p>
-        )}
-      </Card>
+              {isTimerRunning && (
+                <>
+                  <button
+                    className="pauseBtn"
+                    onClick={() => {
+                      setTimerControl("pause");
+                      setIsTimerRunning(false);
+                      setIsPaused(true);
+                    }}
+                  >
+                    ⏸ Paus
+                  </button>
+
+                  <button
+                    className="stopBtn"
+                    onClick={() => {
+                      setTimerControl("stop");
+                    }}
+                  >
+                    ⏹ Stopp & Spara
+                  </button>
+                </>
+              )}
+
+              {isPaused && (
+                <>
+                  <button
+                    className="resumeBtn"
+                    onClick={() => {
+                      setTimerControl("resume");
+                      setIsTimerRunning(true);
+                      setIsPaused(false);
+                    }}
+                  >
+                    ▶ Fortsätt
+                  </button>
+
+                  <button
+                    className="stopBtn"
+                    onClick={() => {
+                      setTimerControl("stop");
+                    }}
+                  >
+                    ⏹ Stopp & Spara
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Tooltip om formulär ej klart */}
+            {!isFormValid && (
+              <p className="form-tooltip">
+                {focusMode === "" && "Välj fokusläge! "} <br />
+                {title.trim() === "" && "Ange en titel. "} <br />
+                {energyLevel === undefined && "Välj energinivå."}
+              </p>
+            )}
+          </Card>
+        </>
+      )}
+      {/* Pomodoro Timer - 3 separata cards */}
+      {mode === 'pomodoro' && (
+        <>
+          {/* Card 1: Timer-väljare */}
+          <Card className="card-wrapper">
+            <div className="timer-content">
+              <div className="modes">
+                <button
+                  className={`mode-btn ${mode === 'normal' ? 'selected' : ''}`}
+                  onClick={() => setMode('normal')}
+                >
+                  <span className="mode-title">Normal Timer</span>
+                  <span className="sub-title">Flexibel tidsspårning</span>
+                </button>
+                <button
+                  className={`mode-btn ${mode === 'pomodoro' ? 'selected' : ''}`}
+                  onClick={() => setMode('pomodoro')}
+                >
+                  <span className="mode-title">Pomodoro Timer</span>
+                  <span className="sub-title">Fokus + pauser</span>
+                </button>
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 2: Tomt (fas-väljaren finns i Pomodoro-komponenten) */}
+          
+          {/* Pomodoro-komponenten direkt, utan extra card */}
+          <Pomodoro navigate={navigate} />
+        </>
+      )}
 </div>
 
   );
