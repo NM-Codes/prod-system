@@ -8,7 +8,7 @@ export default function ThemeToggle(){
     return (
         <button onClick = {toggleTheme}>
             <img 
-            src = {theme === 'light' ? DarkModeButton : LightModeButton}
+            src = {theme === 'light' ? LightModeButton : DarkModeButton}
             alt= "Toggle Theme"
             width={'30px'}
             />
