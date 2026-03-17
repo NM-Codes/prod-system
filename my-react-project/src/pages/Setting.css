@@ -1,33 +1,25 @@
-:root {
-  /* Light mode values */
-  --setting-icon-title: #1a1a1a; /* Blackish */
-}
 
-[data-theme='dark'] {
-  /* Dark mode values */
-  --setting-icon-title: #ffffff; 
-}
 .settings-container{
     max-width: 1000px;
     margin: 0 auto;
     padding: var(--space-md);
     text-align: left;
-    color: var(--color-card-dark-text);
-
+    color: var(--color-card-light-text);
 }
+
 .settings-container.dark {
   color: var(--color-card-dark-text);
 }
 
 /*Disable Background Gradient set a light gray hover */
 /* light mode */
-.settings-container .card-light:hover {
+.settings-container.light .card-base:hover {
     background: #f8fafc !important; 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
     transform: none !important;
 }
 /* Dark Mode */
-.settings-container .card-dark:hover {
+.settings-container.dark .card-base:hover {
     background: #2d3748 !important; /* Slightly lighter than base dark bg */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
     transform: none !important;
@@ -169,7 +161,7 @@ color: var(--color-text);
     font-weight: 600; 
     margin: 0; 
     font-size: 0.95rem;
-    color: var(--setting-icon-title);
+    /* color: var(--setting-icon-title); */
 }
 .sub-label { 
     color: var(--color-text-muted);
