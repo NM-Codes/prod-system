@@ -81,6 +81,123 @@
 
 
 
+/*NÄR DATA FINNS*/
+
+.productivity-card-layout {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.productivity-card-scorecircle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 10px;
+}
+
+.productivity-card-scorecircle.dark{ 
+  background: #1e1b4b; 
+  border: 4px solid #7c3aed; 
+}
+
+.productivity-card-scorecircle.light{ 
+  background: white; 
+  border: 4px solid #a78bfa; 
+}
+
+.score-number{ 
+  font-size: 36px; 
+  font-weight: 800; 
+  line-height: 1.3;
+}
+
+.score-label{ 
+  font-size: 12px; 
+  text-transform: uppercase; 
+}
+
+.score-features{
+    display: flex;
+    gap: 20px;
+}
+
+.features-label-shortnote{
+  display: flex;
+}
+
+.analsysis-small-cards-stats{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.small-card-inner-content{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.small-card-header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.small-card-header h2{
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.small-card-value{
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.small-card-label{
+  font-size: 12px;
+  margin: -8px 0 0 0; 
+  opacity: 0.5;
+}
+
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px; 
+  flex-shrink: 0;
+}
+
+.icon-box.blue {
+  background-color: #dbeafe; /* Ljusblå bakgrund */
+  color: #3b82f6; /* Blå ikonfärg */
+}
+
+.icon-box.green {
+  background-color: #d1fae5; /* Ljusgrön bakgrund */
+  color: #10b981; /* Grön ikonfärg */
+}
+
+.icon-box.purple {
+  background-color: #ede9fe; /* Ljuslila bakgrund */
+  color: #a855f7; /* Lila ikonfärg */
+}
+
+.icon-box.orange {
+  background-color: #ffedd5; /* Ljusorange bakgrund */
+  color: #f97316; /* Orange ikonfärg */
+}
 
 @media (max-width: 768px) {
   .analysis-header {

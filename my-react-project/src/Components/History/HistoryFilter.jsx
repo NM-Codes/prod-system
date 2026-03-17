@@ -11,7 +11,7 @@ const HistoryFilter = () => {
   const filterTheme = theme === 'light' ? 'filter-dark' : 'filter-light';
 
   return (
-    <div className={`search-filter-wrapper ${filterTheme}`}>
+    <div className={`search-filter-wrapper ${theme}`}>
       <div className="history-filter-container">
         {/* Sök-delen */}
         <div className="search-group">
