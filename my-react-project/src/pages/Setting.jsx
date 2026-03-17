@@ -198,7 +198,6 @@ export default function Setting() {
             {/* column 2: Text */}
             <div className="column-text">
               <h3 className="main-label">
-                /* {" "} */
                 Kontohantering
               </h3>
               <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
