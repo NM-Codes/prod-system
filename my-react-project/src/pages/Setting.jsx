@@ -48,17 +48,17 @@ export default function Setting() {
 
   const accountStyle = {
     backgroundColor:
-      theme === "dark"
+      theme === "light"
         ? "var(--color-account-setting-blue)"
         : "var(--color-account-setting-dark)",
     border:
-      theme === "dark"
+      theme === "light"
         ? "1px solid var(--color-card-light-border)"
         : "1px solid var(--color-card-dark-border)",
     color:
-      theme === "dark"
-        ? "var(--color-card-dark-text)"
-        : "var(--color-card-light-text)",
+      theme === "light"
+        ? "var(--color-card-light-text)"
+        : "var(--color-card-dark-text)",
   };
 
   const {
@@ -198,12 +198,10 @@ export default function Setting() {
             {/* column 2: Text */}
             <div className="column-text">
               <h3 className="main-label">
-                {" "}
+                /* {" "} */
                 Kontohantering
               </h3>
-              <p
-                style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}
-              >
+              <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
                 Logga in
               </p>
             </div>
@@ -215,7 +213,7 @@ export default function Setting() {
           </div>
           <div
             className={
-              theme === "light" ? "authentication-dark" : "authentication-light"
+              theme === "light" ? "authentication-light" : "authentication-dark"
             }
           >
             <div className="card-icon">{<FiShield size={22} />}</div>
