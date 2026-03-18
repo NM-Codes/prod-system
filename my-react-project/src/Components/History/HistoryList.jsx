@@ -3,123 +3,113 @@ import './HistoryList.css';
 import Card from "../Cards/Cards";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { useSettings } from "../../Contexts/SettingsContext";
-
-
-
-
-/*
-
-  HistoryList
-
-  -----------
-
-  - Visar alla sessions
-
-  - Senaste överst
-
-  - Full redigering av ALLA fält
-
-*/
-
-
 
 function HistoryList({ sessions, onEdit, onDelete }) {
-  const { energyLogging } = useSettings();
-
   const [editingId, setEditingId] = useState(null);
-
   const [draft, setDraft] = useState(null);
 
+  const groupedSessions = sessions.reduce((groups, session) => {
+    const rawDate = session.date || session.startTime || session.createdAt || "";
+    let dateKey = "Okänt datum";
+    if (rawDate && typeof rawDate === 'string' && rawDate.length >= 10) {
+      dateKey = rawDate.substring(0, 10);
+    }
+    if (!groups[dateKey]) groups[dateKey] = [];
+    groups[dateKey].push(session);
+    return groups;
+  }, {});
 
-
-  // Sorterar så nyaste kommer överst
-
-  const sorted = [...sessions].sort((a, b) => {
-
-    return new Date(`${b.date} ${b.startTime}`) - new Date(`${a.date} ${a.startTime}`);
-
-  });
-
-
+  const sortedDates = Object.keys(groupedSessions).sort().reverse();
 
   function startEdit(session) {
-
     setEditingId(session.id);
-
     setDraft({ ...session });
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-
 
   function saveEdit() {
-
     onEdit(draft.id, draft);
-
     setEditingId(null);
-
-    setDraft(null);
-
   }
 
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case 'Deep work': return '🎯'; 
+      case 'Möte': return '👥';      
+      case 'Paus': return '☕';     
+      case 'Övrigt': return '📝';   
+      default: return '📍';
+    }
+  };
 
   return (
     <div className="history-list-wrapper">
-      {sorted.map((s) => (
-        <Card key={s.id}>
-          {s.id !== editingId ? (
-            <div className="history-card-inner">
-              <strong>{s.title}</strong>
-              <p>{s.date} {s.startTime}–{s.endTime}</p>
-              {/* only show type and energy if they have values */}
-              <p>
-                {s.category} | {s.sessionType}
-                {s.energyLevel > 0 && ` | Energi ${s.energyLevel}`}
-              </p>              <div className="history-actions-icons">
-                <button onClick={() => startEdit(s)}>
-                  <MdEdit />
-                </button>
-                <button onClick={() => onDelete(s.id)}>
-                  <RiDeleteBin5Line style={{ color: "red" }} />
-                </button>
+      {editingId && (
+        <div className="edit-section-container">
+          <Card>
+            <div className="edit-form-content">
+              <h3>Redigera session</h3>
+              <div className="edit-field">
+                <label>Titel</label>
+                <input 
+                  type="text"
+                  value={draft.title} 
+                  onChange={e => setDraft({ ...draft, title: e.target.value })} 
+                />
+              </div>
+              <div className="edit-field">
+                <label>Kategori</label>
+                <input 
+                  type="text"
+                  value={draft.category || ""} 
+                  onChange={e => setDraft({ ...draft, category: e.target.value })} 
+                />
+              </div>
+              <div className="edit-buttons">
+                <button className="btn-save" onClick={saveEdit}>Spara</button>
+                <button className="btn-cancel" onClick={() => setEditingId(null)}>Avbryt</button>
               </div>
             </div>
-          ) : (
-            <div>
-              <input value={draft.title} onChange={e => setDraft({ ...draft, title: e.target.value })} />
-              <input type="date" value={draft.date} onChange={e => setDraft({ ...draft, date: e.target.value })} />
-              <input type="time" step="1" value={draft.startTime} onChange={e => setDraft({ ...draft, startTime: e.target.value })} />
-              <input type="time" step="1" value={draft.endTime} onChange={e => setDraft({ ...draft, endTime: e.target.value })} />
+          </Card>
+        </div>
+      )}
 
-              <select value={draft.category} onChange={e => setDraft({ ...draft, category: e.target.value })}>
-                <option>Arbete</option>
-                <option>Personligt</option>
-                <option>Lärande</option>
-                <option>Övrigt</option>
-              </select>
-
-              <select value={draft.sessionType} onChange={e => setDraft({ ...draft, sessionType: e.target.value })}>
-                <option>Deep work</option>
-                <option>Möte</option>
-                <option>Paus</option>
-              </select>
-
-              {/*Only show energy level selector if energy logging is enabled in settings */}
-              {energyLogging && (
-                <select value={draft.energyLevel} onChange={e => setDraft({ ...draft, energyLevel: Number(e.target.value) })}>
-                  {[1, 2, 3, 4, 5].map(n => <option key={n}>{n}</option>)}
-                </select>
-              )}
-
-              <button onClick={saveEdit}>Spara</button>
-              <button onClick={() => setEditingId(null)}>Avbryt</button>
+      {sortedDates.map(date => (
+        <div key={date} className="history-date-group">
+          <h3 className="history-date-group-header">
+            {date === "Okänt datum" ? date : new Date(date).toLocaleDateString('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </h3>
+          {groupedSessions[date].map(s => (
+            <div key={s.id} className={editingId === s.id ? "active-edit-highlight" : "session-card-wrapper"}>
+              <Card>
+                <div className="history-card-inner">
+                  <div className="history-card-icon">{getCategoryIcon(s.focusMode || s.category)}</div>
+                  <div className="history-card-info">
+                    <div className="history-card-header">
+                      <div className="history-card-title-row">
+                        <strong>{s.title || 'Session utan titel'}</strong>
+                        <span className="history-category-badge">{s.focusMode || 'Övrigt'}</span>
+                      </div>
+                      <div className="history-card-subcategory">{s.category || "Ingen kategori"}</div>
+                    </div>
+                    <div className="history-card-details">
+                      <span>{new Date(date).toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })}</span>
+                      <span className="dot-separator">•</span>
+                      <span>{s.durationMinutes || 0}m</span>
+                    </div>
+                  </div>
+                  <div className="history-actions-icons">
+                    <button onClick={() => startEdit(s)}><MdEdit /></button>
+                    <button onClick={() => onDelete(s.id)}><RiDeleteBin5Line style={{ color: "#ff4d4d" }} /></button>
+                  </div>
+                </div>
+              </Card>
             </div>
-          )}
-        </Card>
+          ))}
+        </div>
       ))}
     </div>
   );
 }
 
-export default HistoryList; 
+export default HistoryList;
