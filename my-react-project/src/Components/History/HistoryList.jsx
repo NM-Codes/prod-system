@@ -33,11 +33,12 @@ function HistoryList({ sessions, onEdit, onDelete }) {
   }
 
   const getCategoryIcon = (category) => {
-    switch (category) {
-      case 'Deep work': return '🎯'; 
-      case 'Möte': return '👥';      
-      case 'Paus': return '☕';     
-      case 'Övrigt': return '📝';   
+    const normalized = (category || "").toLowerCase().trim();
+    switch (normalized) {
+      case 'deep work': return '🎯'; 
+      case 'möte': return '👥';      
+      case 'paus': return '☕';     
+      case 'övrigt': return '📝';   
       default: return '📍';
     }
   };
@@ -83,21 +84,34 @@ function HistoryList({ sessions, onEdit, onDelete }) {
             <div key={s.id} className={editingId === s.id ? "active-edit-highlight" : "session-card-wrapper"}>
               <Card>
                 <div className="history-card-inner">
-                  <div className="history-card-icon">{getCategoryIcon(s.focusMode || s.category)}</div>
+                  <div className="history-card-icon">
+                    {getCategoryIcon(s.focusMode || s.category)}
+                  </div>
+                  
                   <div className="history-card-info">
                     <div className="history-card-header">
                       <div className="history-card-title-row">
                         <strong>{s.title || 'Session utan titel'}</strong>
-                        <span className="history-category-badge">{s.focusMode || 'Övrigt'}</span>
+                        <span className="history-category-badge">
+                          {s.focusMode || s.category || 'Övrigt'}
+                        </span>
                       </div>
                       <div className="history-card-subcategory">{s.category || "Ingen kategori"}</div>
                     </div>
+                    
                     <div className="history-card-details">
                       <span>{new Date(date).toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })}</span>
                       <span className="dot-separator">•</span>
                       <span>{s.durationMinutes || 0}m</span>
+                      
+                      
+                      <span className="dot-separator">•</span>
+                      <span className="energy-status">
+                        Energi: {s.energyLevel || s.energy}
+                      </span>
                     </div>
                   </div>
+
                   <div className="history-actions-icons">
                     <button onClick={() => startEdit(s)}><MdEdit /></button>
                     <button onClick={() => onDelete(s.id)}><RiDeleteBin5Line style={{ color: "#ff4d4d" }} /></button>
