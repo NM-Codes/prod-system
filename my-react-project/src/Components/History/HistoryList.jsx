@@ -38,10 +38,10 @@ function HistoryList({ sessions, onEdit, onDelete }) {
   const getCategoryIcon = (category) => {
     const normalized = (category || "").toLowerCase().trim();
     switch (normalized) {
-      case 'deep work': return '🎯'; 
-      case 'möte': return '👥';      
-      case 'paus': return '☕';     
-      case 'övrigt': return '📝';   
+      case 'deep work': return '🎯';
+      case 'möte': return '👥';
+      case 'paus': return '☕';
+      case 'övrigt': return '📝';
       default: return '📍';
     }
   };
@@ -55,18 +55,18 @@ function HistoryList({ sessions, onEdit, onDelete }) {
               <h3>Redigera session</h3>
               <div className="edit-field">
                 <label>Titel</label>
-                <input 
+                <input
                   type="text"
-                  value={draft.title} 
-                  onChange={e => setDraft({ ...draft, title: e.target.value })} 
+                  value={draft.title}
+                  onChange={e => setDraft({ ...draft, title: e.target.value })}
                 />
               </div>
               <div className="edit-field">
                 <label>Kategori</label>
-                <input 
+                <input
                   type="text"
-                  value={draft.category || ""} 
-                  onChange={e => setDraft({ ...draft, category: e.target.value })} 
+                  value={draft.category || ""}
+                  onChange={e => setDraft({ ...draft, category: e.target.value })}
                 />
               </div>
               <div className="edit-buttons">
@@ -90,7 +90,7 @@ function HistoryList({ sessions, onEdit, onDelete }) {
                   <div className="history-card-icon">
                     {getCategoryIcon(s.focusMode || s.category)}
                   </div>
-                  
+
                   <div className="history-card-info">
                     <div className="history-card-header">
                       <div className="history-card-title-row">
@@ -101,25 +101,31 @@ function HistoryList({ sessions, onEdit, onDelete }) {
                       </div>
                       <div className="history-card-subcategory">{s.category || "Ingen kategori"}</div>
                     </div>
-                    
+
                     <div className="history-card-details">
                       <span>{new Date(s.startTime || s.date).toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', year: 'numeric' })}</span> {/* ÄNDRAT */}
                       <span className="dot-separator">•</span>
                       <span className="session-time-display">
                         <GoClock size={14} />
-                        {new Date(s.startTime || s.date).toLocaleTimeString('sv-SE', { 
-                          hour: '2-digit', 
-                          minute: '2-digit', 
-                          hour12: timeFormat === "12h" 
+                        {new Date(s.startTime || s.date).toLocaleTimeString('sv-SE', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: timeFormat === "12h"
                         })}
                       </span>
                       <span className="dot-separator">•</span>
                       <span>{s.durationMinutes || 0}m</span>
-                      
-                      
+
+
                       <span className="dot-separator">•</span>
                       <span className="energy-status">
-                        Energi: {s.energyLevel || s.energy}
+                        
+                        {/* Shown when Energy logging is selected. */}
+                        {s.energyLevel && (
+                          <>
+                            <span>Energi: {s.energyLevel}</span>
+                          </>
+                        )}
                       </span>
                     </div>
                   </div>

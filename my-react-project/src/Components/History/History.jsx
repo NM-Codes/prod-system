@@ -19,7 +19,6 @@ const filteredSessions = (sessions || []).filter(s => {
     
     // 2. Vi gör även dropdown-valet till små bokstäver för jämförelsen
     const selectedCat = selectedCategory.toLowerCase();
-
     // Sök-matchning
     const matchesSearch = search === "" || sessionCat.startsWith(search);
     
