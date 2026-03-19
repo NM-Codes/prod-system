@@ -23,36 +23,32 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
   const [isPaused, setIsPaused] = useState(false);
   const [sessionType, setSessionType] = useState("Deep work");
 
-    
+
   // Access the timeFormat
-  const {timeFormat} = useSettings();
-  const {energyLogging} = useSettings();
-  
+  const { timeFormat } = useSettings();
+  const { energyLogging } = useSettings();
+
   // Initieras från Timer om data finns
   const [date, setDate] = useState(initialSession?.date ?? "");
   const [startTime, setStartTime] = useState(initialSession?.startTime ?? "");
   const [endTime, setEndTime] = useState(initialSession?.endTime ?? "");
 
-  
+
   //toggle 12-hours and 24-hours
-  const formatDisplay = (timeStr) => {
-    if (!timeStr) return "--:--";
-    try {
-      const [hours, minutes] = timeStr.split(':');
-      const d = new Date();
-      d.setHours(parseInt(hours, 10));
-      d.setMinutes(parseInt(minutes, 10));
-      d.setSeconds(0);
-      return d.toLocaleTimeString('sv-SE', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        hour12: timeFormat === '12h' 
-      });
-    } catch (e) {
-      return timeStr; // Fallback if string is messy
-    }
-  };
-  
+  const formatDisplay = (timeInput) => {
+    if (!timeInput) return "--:--";
+    const date = new Date(timeInput);
+    if (timeFormat === '24h') {
+    return date.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+  } else {
+    const h = date.getHours();
+    const m = date.getMinutes().toString().padStart(2, '0');
+    const period = h < 12 ? 'FM' : 'EM';
+    const displayH = h % 12 || 12;
+    return `${displayH}:${m} ${period}`;
+  }
+};
+
   function handleSubmit(e) {
     e.preventDefault();
     // Calculate duration of the session in minutes
@@ -75,10 +71,10 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
 
 
   const [focusOptions, setFocusOptions] = useState([
-    { label: 'Deep Work', emoji: '🎯', minutes: 90, color:'#FF9B49' },
-    { label: 'Möte', emoji: '👥', minutes: 30, color:'#2A7FFF' },
-    { label: 'Paus', emoji: '☕', minutes: 15, color:'#6DD18C' },
-    { label: 'Övrigt', emoji: '📝', minutes: 60,color:'#9096A3'},
+    { label: 'Deep Work', emoji: '🎯', minutes: 90, color: '#FF9B49' },
+    { label: 'Möte', emoji: '👥', minutes: 30, color: '#2A7FFF' },
+    { label: 'Paus', emoji: '☕', minutes: 15, color: '#6DD18C' },
+    { label: 'Övrigt', emoji: '📝', minutes: 60, color: '#9096A3' },
   ]);
 
   // När SettingsTimer sparar alla kort
@@ -140,7 +136,7 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
 
 
   //difference between two time strings
-  const calculateMinutes = (start , end) =>{
+  const calculateMinutes = (start, end) => {
     if (!start || !end) return 0;
     const startPair = start.split(':').map(Number);
     const endPair = end.split(':').map(Number);
@@ -150,26 +146,26 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
 
     //if end time is after midnight, add 24 hours to it
     let diffSeconds = endSeconds - startSeconds;
-  
-  // Handle midnight crossover
-  if (diffSeconds < 0) diffSeconds += 86400; 
 
-  // Convert to minutes with one decimal place (e.g., 1.3 minutes)
-  // Or use Math.round() if you prefer whole numbers
-  const totalMinutes = diffSeconds / 60;
-  
-  return parseFloat(totalMinutes.toFixed(1));
-    
+    // Handle midnight crossover
+    if (diffSeconds < 0) diffSeconds += 86400;
+
+    // Convert to minutes with one decimal place (e.g., 1.3 minutes)
+    // Or use Math.round() if you prefer whole numbers
+    const totalMinutes = diffSeconds / 60;
+
+    return parseFloat(totalMinutes.toFixed(1));
+
   }
 
   //Data manager for energy logs, only used if energy logging is enabled in settings
   const handleSaveSession = (newSession) => {
-  const existingSessions = JSON.parse(localStorage.getItem("workSessions") || "[]");
+    const existingSessions = JSON.parse(localStorage.getItem("sessions") || "[]");
     const updatedSessions = [...existingSessions, newSession];
-    localStorage.setItem("workSessions", JSON.stringify(updatedSessions));
-};
+    localStorage.setItem("sessions", JSON.stringify(updatedSessions));
+  };
 
-  
+
 
   return (
 
@@ -235,6 +231,18 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
 
           {/* Card 3: Timer + formulär */}
           <Card className="card-wrapper timer">
+            {/* NEW: Time Status Bar */}
+            <div className="session-time-status">
+              <div className="time-block">
+                <span>Startar:</span>
+                <strong>{formatDisplay(startTime || new Date())}</strong>
+              </div>
+              {/* <div className="time-block">
+                <span>Slutar:</span>
+                <strong>{endTime ? formatDisplay(endTime) : "--:--"}</strong>
+              </div> */}
+            </div>
+
             <Timer
               focusMinutes={focusMinutes}
               onStart={() => setIsTimerRunning(true)}
@@ -384,12 +392,12 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
           </Card>
 
           {/* Card 2: Tomt (fas-väljaren finns i Pomodoro-komponenten) */}
-          
+
           {/* Pomodoro-komponenten direkt, utan extra card */}
           <Pomodoro navigate={navigate} />
         </>
       )}
-</div>
+    </div>
 
   );
 }

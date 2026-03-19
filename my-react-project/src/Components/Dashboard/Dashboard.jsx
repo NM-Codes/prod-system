@@ -1,39 +1,81 @@
 import "./Dashboard.css"
 import Card from "../Cards/Cards"
+import { useSettings } from "../../Contexts/SettingsContext.jsx";
+
+
 
 function Dashboard({ totalMinutes, goal, progress, sessionCount, averageEnergy }) {
+  const { timeFormat } = useSettings();
+
+  //toggle 12-hours and 24-hours and shows in the dashboard
+  const getFormattedDateTime = () => {
+  const now = new Date();
+  const datePart = now.toLocaleDateString('sv-SE', { 
+    weekday: 'long', 
+    day: 'numeric', 
+    month: 'long' 
+  });
+
+  let timePart = now.toLocaleTimeString('sv-SE', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false 
+  });
+
+  if (timeFormat === '12h') {
+    const hours24 = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    
+    const period = hours24 < 12 ? 'FM' : 'EM';
+    
+    let hours12 = hours24 % 12;
+    hours12 = hours12 ? hours12 : 12; 
+    
+    timePart = `${hours12}:${minutes} ${period}`;
+  }
+
+  return `${datePart.charAt(0).toUpperCase() + datePart.slice(1)}, ${timePart}`;
+};
+
+
   return (
     <div className="dashboard">
 
       {/* HEADER */}
       <header className="dashboard-header">
-        <h1>Dashboard</h1>
-        <p>Snabb översikt över din produktivitet</p>
+        <div className="header-left">
+          <h1>Dashboard</h1>
+          <p>Snabb översikt över din produktivitet</p>
+        </div>
+        {/* 3. Display the formatted date/time */}
+        <div className="header-date">
+          <span className="current-date-text">{getFormattedDateTime()}</span>
+        </div>
       </header>
-      
+
 
       {/* DEL 1 – IDAG */}
       <section className="dashboard-stats">
-        <Card title="Idag" 
-        className="card-today">
-            <div className="stat-row">
-                <div className="stat-group">
-                    <span className="stat-title">Arbetstid</span>
-                    <span className="stat-value-blue">{totalMinutes} Min</span>
-                    <span >{Math.round(progress)}% av mål</span>
+        <Card title="Idag"
+          className="card-today">
+          <div className="stat-row">
+            <div className="stat-group">
+              <span className="stat-title">Arbetstid</span>
+              <span className="stat-value-blue">{totalMinutes} Min</span>
+              <span >{Math.round(progress)}% av mål</span>
 
-                </div>
-
-                <div className="stat-group">
-                    <span className="stat-title">Sessioner</span>
-                    <span className="stat-value-purple">{sessionCount}</span>
-                </div>
-
-                <div className="stat-group">
-                    <span className="stat-title">Denna vecka</span>
-                    <span className="stat-value-green">12h</span>
-                </div>
             </div>
+
+            <div className="stat-group">
+              <span className="stat-title">Sessioner</span>
+              <span className="stat-value-purple">{sessionCount}</span>
+            </div>
+
+            <div className="stat-group">
+              <span className="stat-title">Denna vecka</span>
+              <span className="stat-value-green">12h</span>
+            </div>
+          </div>
         </Card>
       </section>
 
@@ -91,7 +133,7 @@ function Dashboard({ totalMinutes, goal, progress, sessionCount, averageEnergy }
       <section className="dashboard-stats">
 
         <Card title="🚀 Kom igång!" className="footer-card">
-        
+
           <ul className="start-list">
             <li>Gå till Timer-sidan och starta din första session</li>
             <li>Välj mellan Normal timer eller Pomodoro</li>
