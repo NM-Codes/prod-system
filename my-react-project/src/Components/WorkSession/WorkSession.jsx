@@ -26,6 +26,8 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
 
   // Access the timeFormat
   const { timeFormat } = useSettings();
+
+  //Acess the EnergyLogging
   const { energyLogging } = useSettings();
 
   // Initieras från Timer om data finns
@@ -39,15 +41,15 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
     if (!timeInput) return "--:--";
     const date = new Date(timeInput);
     if (timeFormat === '24h') {
-    return date.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
-  } else {
-    const h = date.getHours();
-    const m = date.getMinutes().toString().padStart(2, '0');
-    const period = h < 12 ? 'FM' : 'EM';
-    const displayH = h % 12 || 12;
-    return `${displayH}:${m} ${period}`;
-  }
-};
+      return date.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+    } else {
+      const h = date.getHours();
+      const m = date.getMinutes().toString().padStart(2, '0');
+      const period = h < 12 ? 'FM' : 'EM';
+      const displayH = h % 12 || 12;
+      return `${displayH}:${m} ${period}`;
+    }
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -100,7 +102,7 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
       title: title.trim() || 'Session utan titel',
       category: category.trim() || 'Övrigt',
       focusMode: focusMode || 'Övrigt',
-      energyLevel: energyLevel ?? 3,
+      energyLevel: energyLogging ? (energyLevel ?? 3) : null, // I changed it becuse I dont want to show 3 in history page if energy logging is turn off
       durationMinutes,
       startTime: new Date(startTimestamp).toISOString(),
       endTime: new Date(endTimestamp).toISOString(),
@@ -132,7 +134,9 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
   const isFormValid =
     title.trim() !== "" &&
     focusMode !== "" &&
-    energyLevel !== undefined;
+    // If energyLogging is true, check if energyLevel is set. 
+    // If energyLogging is false, ignore the energyLevel check.
+    (energyLogging ? energyLevel !== undefined : true);
 
 
   //difference between two time strings
@@ -288,8 +292,13 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
                 />
               </div>
 
-              <EnergyLogger onLevelSelect={setEnergyLevel} />
-            </div>
+              {/* just when energy logging is turn on in setting page, show this part */}
+              {energyLogging && (
+                <div className="energy-logger-container">
+                  <EnergyLogger onLevelSelect={setEnergyLevel} />
+                </div>
+              )}            
+              </div>
 
             {/* Start / Paus / Fortsätt / Stop */}
             <div className="timer-buttons-bottom">
@@ -360,7 +369,8 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
               <p className="form-tooltip">
                 {focusMode === "" && "Välj fokusläge! "} <br />
                 {title.trim() === "" && "Ange en titel. "} <br />
-                {energyLevel === undefined && "Välj energinivå."}
+                {/* If energylogging is on in setting, show it here*/}
+                {energyLogging && energyLevel === undefined && "Välj energinivå."} 
               </p>
             )}
           </Card>
