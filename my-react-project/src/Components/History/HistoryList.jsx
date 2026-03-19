@@ -3,10 +3,13 @@ import './HistoryList.css';
 import Card from "../Cards/Cards";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { GoClock } from "react-icons/go"; // ÄNDRAT
+import { useSettings } from "../../Contexts/SettingsContext.jsx"; //ÄNDRAT
 
 function HistoryList({ sessions, onEdit, onDelete }) {
   const [editingId, setEditingId] = useState(null);
   const [draft, setDraft] = useState(null);
+  const { timeFormat } = useSettings(); // ÄNDRAT
 
   const groupedSessions = sessions.reduce((groups, session) => {
     const rawDate = session.date || session.startTime || session.createdAt || "";
@@ -100,7 +103,16 @@ function HistoryList({ sessions, onEdit, onDelete }) {
                     </div>
                     
                     <div className="history-card-details">
-                      <span>{new Date(date).toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })}</span>
+                      <span>{new Date(s.startTime || s.date).toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', year: 'numeric' })}</span> {/* ÄNDRAT */}
+                      <span className="dot-separator">•</span>
+                      <span className="session-time-display">
+                        <GoClock size={14} />
+                        {new Date(s.startTime || s.date).toLocaleTimeString('sv-SE', { 
+                          hour: '2-digit', 
+                          minute: '2-digit', 
+                          hour12: timeFormat === "12h" 
+                        })}
+                      </span>
                       <span className="dot-separator">•</span>
                       <span>{s.durationMinutes || 0}m</span>
                       

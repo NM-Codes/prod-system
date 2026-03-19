@@ -160,3 +160,11 @@
 .session-card-wrapper, .active-edit-highlight {
   margin-bottom: var(--space-md); 
 }
+
+.session-time-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  /* Här kan du även lägga till färg om du vill att tiden ska vara lite diskretare */
+  color: var(--color-text-muted); 
+}
