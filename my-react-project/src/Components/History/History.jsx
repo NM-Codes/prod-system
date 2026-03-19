@@ -11,16 +11,21 @@ function History({ sessions, onEdit, onDelete }) {
   const hasNoSessionsAtAll = !sessions || sessions.length === 0;
 
   {/* FILTRERINGSLOGIK: Använder startsWith för att starta filtreringen exakt vid första bokstaven */}
-  const filteredSessions = (sessions || []).filter(s => {
+const filteredSessions = (sessions || []).filter(s => {
     const search = searchTerm.toLowerCase().trim();
-    const focusMode = (s.focusMode || "").toLowerCase();
+    
+    // 1. Vi hämtar kategorin (från både focusMode eller category för att vara säkra)
+    const sessionCat = (s.focusMode || s.category || "Övrigt").toLowerCase();
+    
+    // 2. Vi gör även dropdown-valet till små bokstäver för jämförelsen
+    const selectedCat = selectedCategory.toLowerCase();
 
+    // Sök-matchning
+    const matchesSearch = search === "" || sessionCat.startsWith(search);
     
-   {/* Matchar om ordet BÖRJAR på det du skriver (t.ex. Ö matchar Övrigt men inte Möte) */}
-    const matchesSearch = search === "" || focusMode.startsWith(search);
-    
-    const matchesCategory = selectedCategory === "Alla lägen" || 
-                            s.focusMode === selectedCategory;
+    // Kategori-matchning (Dropdown)
+    // Vi kollar om "Alla lägen" är valt, annars jämför vi "small" mot "small"
+    const matchesCategory = selectedCategory === "Alla lägen" || sessionCat === selectedCat;
 
     return matchesSearch && matchesCategory;
   });
