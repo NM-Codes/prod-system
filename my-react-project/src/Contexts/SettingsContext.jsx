@@ -58,7 +58,6 @@ export function SettingProvider({ children }) {
     localStorage.setItem("dailyGoal", JSON.stringify(dailyGoal));
     localStorage.setItem("energyLogging", JSON.stringify(energyLogging));
     localStorage.setItem("autoSave", JSON.stringify(autoSave));
-    localStorage.setItem("sessions", JSON.stringify(sessions));
     if (autoSave) {
       const settingsObj = {
         timeFormat,
