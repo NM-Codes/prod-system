@@ -4,7 +4,7 @@ import { useSettings } from "../../Contexts/SettingsContext.jsx";
 
 
 
-function Dashboard({ totalMinutes, goal, progress, sessionCount, averageEnergy }) {
+function Dashboard({ totalMinutes, goal, progress, sessionCount, averageEnergy,  weeklyMinutes}) {
   const { timeFormat } = useSettings();
 
   //toggle 12-hours and 24-hours and shows in the dashboard
@@ -73,7 +73,7 @@ function Dashboard({ totalMinutes, goal, progress, sessionCount, averageEnergy }
 
             <div className="stat-group">
               <span className="stat-title">Denna vecka</span>
-              <span className="stat-value-green">12h</span>
+              <span className="stat-value-green">{Math.floor(weeklyMinutes / 60)}h {(weeklyMinutes % 60).toFixed(0)}m</span>
             </div>
           </div>
         </Card>
@@ -82,22 +82,24 @@ function Dashboard({ totalMinutes, goal, progress, sessionCount, averageEnergy }
       {/* DEL 2 – 4 STATS */}
       <section className="dashboard-stats">
         <Card>
-          <span className="stat-title">Total tid</span>
+          <span className="stat-title">Total tid </span>
           <span className="stat-value">{totalMinutes}m</span>
         </Card>
 
         <Card>
-          <span className="stat-title">Sessioner</span>
+          <span className="stat-title">Sessioner </span>
           <span className="stat-value">{sessionCount}</span>
         </Card>
 
         <Card>
-          <span className="stat-title">Snitt energi</span>
-          <span className="stat-value">{averageEnergy}</span>
+          <span className="stat-title">Snitt energi </span>
+          <span className="stat-value">{averageEnergy}/ 5</span>
+          <span className="energy-max"></span>
         </Card>
+        
 
         <Card>
-          <span className="stat-title">Snitt/session</span>
+          <span className="stat-title">Snitt/session </span>
           <span className="stat-value">{sessionCount > 0 ? Math.round(totalMinutes / sessionCount) : 0}m</span>
         </Card>
       </section>

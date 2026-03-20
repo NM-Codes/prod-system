@@ -51,25 +51,24 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
     }
   };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // Calculate duration of the session in minutes
-    const duration = calculateMinutes(startTime, endTime);
-    const finalSession = {
-      id: crypto.randomUUID(),
-      title,
-      category,
-      sessionType,
-      date: date || new Date().toISOString().split('T')[0],
-      // Only save energy level if logging is enabled in settings
-      energyLevel: energyLogging ? energyLevel : null,
-      duration,
-      //Save the time in the format the user prefers
-      startTime: formatDisplay(startTime),
-      endTime: formatDisplay(endTime),
-    }
-    onSave(finalSession);
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   const duration = calculateMinutes(startTime, endTime);
+  //   const finalSession = {
+  //     id: crypto.randomUUID(),
+  //     title,
+  //     category,
+  //     sessionType,
+  //     date: date || new Date().toISOString().split('T')[0],
+  //     // Only save energy level if logging is enabled in settings
+  //     energyLevel: energyLogging ? energyLevel : null,
+  //     duration,
+  //     //Save the time in the format the user prefers
+  //     startTime: formatDisplay(startTime),
+  //     endTime: formatDisplay(endTime),
+  //   }
+  //   onSave(finalSession);
+  // }
 
 
   const [focusOptions, setFocusOptions] = useState([
@@ -102,7 +101,9 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
       title: title.trim() || 'Session utan titel',
       category: category.trim() || 'Övrigt',
       focusMode: focusMode || 'Övrigt',
+      date: date || new Date().toISOString().split('T')[0],
       energyLevel: energyLogging ? (energyLevel ?? 3) : null, // I changed it becuse I dont want to show 3 in history page if energy logging is turn off
+      duration: durationMinutes, // Save as Number for Dashboard calculations
       durationMinutes,
       startTime: new Date(startTimestamp).toISOString(),
       endTime: new Date(endTimestamp).toISOString(),
@@ -112,7 +113,6 @@ export default function WorkSession({ initialSession, onSave, navigate }) {
     if (typeof onSave === 'function') {
       onSave(session);
     }
-
     // Omdirigera till History sidan
     if (typeof navigate === 'function') {
       navigate("/history");
