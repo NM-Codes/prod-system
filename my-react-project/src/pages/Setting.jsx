@@ -79,7 +79,7 @@ export default function Setting() {
     sessions
   } = useSettings();
 
-  // Helper to convert minutes to "Xh Ym per dag"
+  // Helper to convert minutes to "Xh Ym per day"
   const formatGoalHint = (minutes) => {
     // Convert to number and default to 0 if input is empty/invalid
     const totalMinutes = parseInt(minutes, 10) || 0;
