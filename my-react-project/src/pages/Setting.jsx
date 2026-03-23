@@ -41,6 +41,26 @@ export default function Setting() {
     sessions: 0,
     logs: 0,
   });
+
+  const {
+    timeFormat,
+    setTimeFormat,
+    weekStart,
+    setWeekStart,
+    notifications,
+    updateNotify,
+    dailyGoal,
+    setDailyGoal,
+    energyLogging,
+    setEnergyLogging,
+    autoSave,
+    setAutoSave,
+    saveChange,
+    setSaveChange,
+    sessions
+  } = useSettings();
+
+
   const themeLabel = theme === "light" ? "Ljust läge" : "Mörkt läge";
   const buttonText = theme === "light" ? "Ljust" : "Mörkt";
 
@@ -61,23 +81,7 @@ export default function Setting() {
         : "var(--color-card-dark-text)",
   };
 
-  const {
-    timeFormat,
-    setTimeFormat,
-    weekStart,
-    setWeekStart,
-    notifications,
-    updateNotify,
-    dailyGoal,
-    setDailyGoal,
-    energyLogging,
-    setEnergyLogging,
-    autoSave,
-    setAutoSave,
-    saveChange,
-    setSaveChange,
-    sessions
-  } = useSettings();
+  
 
   // Helper to convert minutes to "Xh Ym per day"
   const formatGoalHint = (minutes) => {
@@ -127,17 +131,26 @@ export default function Setting() {
     // This array tells React to run the effect whenever these change:
   }, [timeFormat, weekStart, notifications, dailyGoal, energyLogging, autoSave]);
 
-  
 
-   //Export EnergiLogging
-   useEffect(() => {
+  //Export EnergiLogging
+  const formatTimeOnly = (isoString) => {
+    if (!isoString) return "--:--";
+    const date = new Date(isoString);
+
+    return date.toLocaleTimeString('sv-SE', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  useEffect(() => {
     const savedSessions = JSON.parse(localStorage.getItem("sessions") || "[]");
-    const logs = savedSessions.filter(s => s.energyLevel !== null && s.energyLevel > 0).length;
+    const logs = savedSessions.filter(s => s.energyLevel != null).length;
     setStats(prev => ({ ...prev, sessions: savedSessions.length, logs }));
   }, [sessions]);
 
   const sessionCount = sessions.length;
-  const energyLogCount = sessions.filter(s => s.energyLevel > 0).length;
+  const energyLogCount = sessions.filter(s => s.energyLevel != null).length;
 
   const exportEnergyLogs = () => {
     if (!sessions || sessions.length === 0) {
@@ -146,14 +159,14 @@ export default function Setting() {
     }
     // Filter out only sessions that have an energy level
     const energyLogs = sessions
-      .filter(s => s.energyLevel !== null && s.energyLevel !== undefined && s.energyLevel > 0)
+      .filter(s => s.energyLevel !== null && s.energyLevel !== "")
       .map(s => ({
         date: s.date,
-        startTime: s.startTime,
-        endTime: s.endTime,
+        startTime: formatTimeOnly(s.startTime),
+        endTime: formatTimeOnly(s.endTime),
         energyLevel: s.energyLevel,
         title: s.title,
-        duration: s.duration, 
+        duration: s.duration || s.durationMinutes,
         category: s.category,
         sessionType: s.sessionType,
 
@@ -207,7 +220,7 @@ export default function Setting() {
 
             {/* column 3: Button */}
             <div className="column-button">
-              <button className="login-button">Logga in</button>
+              <Button >Logga in</Button>
             </div>
           </div>
           <div
@@ -237,9 +250,9 @@ export default function Setting() {
               <p className="sub-label">{themeLabel}</p>
             </div>
             {/* The Toggle Button */}
-            <button className="theme-btn" onClick={toggleTheme}>
+            <Button className="theme-btn" onClick={toggleTheme}>
               {buttonText}
-            </button>
+            </Button>
           </div>
         </Card>
 
@@ -256,18 +269,18 @@ export default function Setting() {
           <div className="setting-item-group">
             <p className="group-title">Tidsformat</p>
             <div className="button-group">
-              <button
+              <Button
                 className={`group-btn ${timeFormat === "24h" ? "active" : ""}`}
                 onClick={() => setTimeFormat("24h")}
               >
                 24-timmars
-              </button>
-              <button
+              </Button>
+              <Button
                 className={`group-btn ${timeFormat === "12h" ? "active" : ""}`}
                 onClick={() => setTimeFormat("12h")}
               >
                 12-timmars
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -275,18 +288,18 @@ export default function Setting() {
           <div className="setting-item-group">
             <p className="group-title">Veckan börjar på</p>
             <div className="button-group">
-              <button
+              <Button
                 className={`group-btn ${weekStart === "Måndag" ? "active" : ""}`}
                 onClick={() => setWeekStart("Måndag")}
               >
                 Måndag
-              </button>
-              <button
+              </Button>
+              <Button
                 className={`group-btn ${weekStart === "Söndag" ? "active" : ""}`}
                 onClick={() => setWeekStart("Söndag")}
               >
                 Söndag
-              </button>
+              </Button>
             </div>
           </div>
         </Card>
@@ -313,12 +326,12 @@ export default function Setting() {
             <div>
               <p className="main-label">Push-notifikationer</p>
             </div>
-            <button
+            <Button
               className={`notification-btn theme-btn ${notifications.push ? "active" : ""}`}
               onClick={() => updateNotify("push", !notifications.push)}
             >
               {notifications.push ? "På" : "Av"}
-            </button>
+            </Button>
           </div>
           {/* Notification Sound Row */}
           <div className="push-notification">
@@ -332,12 +345,12 @@ export default function Setting() {
             <div>
               <p className="main-label">Notifikationsljud</p>
             </div>
-            <button
+            <Button
               className={`notification-btn theme-btn ${notifications.sound ? "active" : ""}`}
               onClick={() => updateNotify("sound", !notifications.sound)}
             >
               {notifications.sound ? "På" : "Av"}
-            </button>
+            </Button>
           </div>
 
           {/* Volume Slider */}
@@ -366,12 +379,12 @@ export default function Setting() {
             <div>
               <p className="main-label">Pauspåminnelser</p>
             </div>
-            <button
+            <Button
               className={`notification-btn theme-btn ${notifications.push ? "active" : ""}`}
               onClick={() => updateNotify("push", !notifications.push)}
             >
               {notifications.push ? "På" : "Av"}
-            </button>
+            </Button>
           </div>
         </Card>
 
@@ -406,12 +419,12 @@ export default function Setting() {
               <p className="main-label">Energiloggning</p>
               <p className="sub-label">Logga energinivå efter sessioner</p>
             </div>
-            <button
+            <Button
               className={`notification-btn theme-btn ${energyLogging ? "active" : ""}`}
               onClick={() => setEnergyLogging(!energyLogging)}
             >
               {energyLogging ? "På" : "Av"}
-            </button>
+            </Button>
           </div>
 
           <div className="push-notification">
@@ -422,7 +435,7 @@ export default function Setting() {
               <p className="main-label">Auto-spara</p>
               <p className="sub-label">Spara automatiskt till localStorage</p>
             </div>
-            <button
+            <Button
               className={`notification-btn theme-btn ${autoSave ? "active" : ""}`}
               onClick={() => {
                 const newValue = !autoSave;
@@ -438,7 +451,7 @@ export default function Setting() {
               }}
             >
               {autoSave ? "På" : "Av"}
-            </button>
+            </Button>
           </div>
         </Card>
       </div>
@@ -476,18 +489,18 @@ export default function Setting() {
 
         {/* Button Grid */}
         <div className="data-button-grid">
-          <button className="data-btn">
+          <Button className="data-btn">
             <CgExport /> Exportera all data
-          </button>
-          <button className="data-btn">
+          </Button>
+          <Button className="data-btn">
             <CgExport /> Exportera tidposter
-          </button>
-          <button className="data-btn" onClick={exportEnergyLogs}>
+          </Button>
+          <Button className="data-btn" onClick={exportEnergyLogs}>
             <CgExport /> Exportera energiloggar
-          </button>
-          <button className="data-btn">
+          </Button>
+          <Button className="data-btn">
             <LuImport /> Importera data
-          </button>
+          </Button>
         </div>
 
         {/* Warning Banner */}
@@ -501,7 +514,7 @@ export default function Setting() {
         </div>
 
         {/* Danger Action */}
-        <button
+        <Button
           className="delete-data-btn"
           onClick={() => {
             if (
@@ -516,7 +529,7 @@ export default function Setting() {
         >
           <FaRegTrashAlt size={18} />
           Radera all data
-        </button>
+        </Button>
       </Card>
 
       {/* Productivity Tips Card - Green Section */}
