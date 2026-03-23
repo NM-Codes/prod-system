@@ -165,6 +165,41 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  /* Här kan du även lägga till färg om du vill att tiden ska vara lite diskretare */
   color: var(--color-text-muted); 
+}
+
+@media (max-width: 650px) {
+  .history-card-inner {
+    flex-wrap: wrap; 
+    position: relative;
+    padding-bottom: var(--space-xl); 
+  }
+
+  .history-actions-icons {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .history-card-info {
+    width: 100%; 
+    padding-right: var(--space-xl); 
+  }
+
+  .history-card-title-row {
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+
+  .history-card-details {
+    flex-wrap: wrap; 
+    gap: var(--space-xs);
+    font-size: var(--font-size-xs); 
+  }
+
+  .dot-separator {
+    display: none; 
+  }
 }
