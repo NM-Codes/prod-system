@@ -2,7 +2,7 @@ import { useState } from "react";
 import './HistoryList.css';
 import { useSettings } from "../../Contexts/SettingsContext.jsx"; 
 import HistoryEditForm from "./HistoryEditForm";
-import HistoryCard from "./HistoryCard"; // NY IMPORT
+import HistoryCard from "./HistoryCard";
 
 function HistoryList({ sessions, onEdit, onDelete }) {
   const [editingId, setEditingId] = useState(null);
