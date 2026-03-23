@@ -46,7 +46,7 @@ export function SettingProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   };
 
-  // const initial = getInitialSettings();
+  const initial = getInitialSettings();
 
   
 

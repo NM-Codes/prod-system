@@ -1,10 +1,8 @@
 import React from 'react'
 import './Input.css'
 
-// Input component with dark and light mode support
 const Input = ({
-  label, error,value, onChange, isDarkMode = false, placeholder, type = 'text', ...rest
-}) => {
+  label, error,value, onChange, isDarkMode = false, placeholder, type = 'text', ...rest}) => {
   // Determine label class based on isDarkMode prop
   const labelClassName = `inputLabel ${isDarkMode ? 'labelDark' : 'labelLight'}`;
   // Determine input field class based on isDarkMode prop and error presence
@@ -31,3 +29,5 @@ const Input = ({
 };
 
 export default Input;
+
+
