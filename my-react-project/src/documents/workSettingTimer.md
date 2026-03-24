@@ -64,8 +64,3 @@ defaultPresets = [
   { label: 'Paus',      emoji: '☕', minutes: 15, color: '#6DD18C' },
   { label: 'Övrigt',    emoji: '📝', minutes: 60, color: '#9096A3' }
 ]
-
----
-
-**Skapad:** Mars 2026  
-**Författare:** Najah
