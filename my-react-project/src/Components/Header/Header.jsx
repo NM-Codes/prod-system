@@ -3,6 +3,14 @@ import menuItems from "./navData"
 import ThemeToggle from "../ThemeToggle/ThemeToggle.jsx"
 import { NavLink } from "react-router-dom"
 
+/**
+ * Applikationens toppsektion som hanterar navigering och globala inställningar.
+ * @component
+ * @param {Object} props
+ * @param {Function} props.changePage - Callback-funktion för att byta sida (Legacy-stöd).
+ * @param {string} props.activePage - Titeln på den nuvarande aktiva sidan för styling.
+ * @description Renderar navigeringsmenyn baserat på navData och inkluderar en ThemeToggle för temabyten.
+ */
 
 //ChangePage state funktion från app.jsx för att uppdatera sidan, activepage är den aktiva sidans titel
 function Header ({changePage, activePage}) {

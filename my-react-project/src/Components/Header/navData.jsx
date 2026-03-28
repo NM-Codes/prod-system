@@ -4,6 +4,14 @@ import { GoClock, GoGraph, GoArchive, } from "react-icons/go"
 import { LuSettings } from "react-icons/lu";
 import { RxDashboard } from "react-icons/rx";
 
+/**
+ * Konfigurationsdata för applikationens navigationsmeny.
+ * Innehåller titlar, ikoner och sökvägar för de olika vyerna.
+ * @type {Array<{title: string, icon: JSX.Element, path: string}>}
+ * @description Används av Header-komponenten för att mappa ut navigeringslänkar. 
+ * Notera att "Session" filtreras bort i huvudmenyn via Header.jsx.
+ */
+
 
 const menuItems = [
   {title: "Dashboard",
