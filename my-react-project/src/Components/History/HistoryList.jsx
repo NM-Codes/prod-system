@@ -4,6 +4,16 @@ import { useSettings } from "../../Contexts/SettingsContext.jsx";
 import HistoryEditForm from "./HistoryEditForm";
 import HistoryCard from "./HistoryCard";
 
+/**
+ * Grupperar och renderar sessioner baserat på datum.
+ * Hanterar lokalt tillstånd för vilken session som redigeras.
+ * @component
+ * @param {Object} props
+ * @param {Array<Object>} props.sessions - Lista med filtrerade arbetspass som ska visas.
+ * @param {Function} props.onEdit - Funktion för att spara uppdaterad sessionsdata.
+ * @param {Function} props.onDelete - Funktion för att radera en session via dess ID.
+ */
+
 function HistoryList({ sessions, onEdit, onDelete }) {
   const [editingId, setEditingId] = useState(null);
   const [draft, setDraft] = useState(null);

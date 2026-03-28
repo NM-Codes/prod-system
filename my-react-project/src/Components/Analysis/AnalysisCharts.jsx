@@ -1,6 +1,14 @@
 import Card from '../Cards/Cards';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 
+/**
+ * Renderar en samling grafer (Recharts) för att visualisera arbetsmönster.
+ * @component
+ * @param {Object} props
+ * @param {Object} props.stats - Den färdigberäknade statistiken från Analysis.jsx.
+ * @param {boolean} props.isDark - Flagga för att anpassa grafernas färger efter tema.
+ */
+
 const AnalysisCharts = ({ stats, isDark }) => {
   return (
     <>

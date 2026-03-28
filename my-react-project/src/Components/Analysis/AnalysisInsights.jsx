@@ -2,6 +2,13 @@ import Card from '../Cards/Cards';
 import { LuBrain } from "react-icons/lu";
 import { FaFireFlameCurved } from "react-icons/fa6";
 
+/**
+ * Presenterar automatiserade insikter i listform baserat på användardata.
+ * @component
+ * @param {Object} props
+ * @param {Object} props.stats - Innehåller peakTime, bestDay och avgEnergy.
+ */
+
 const AnalysisInsights = ({ stats, isDark }) => {
   return (
     <div className='insight-wrapper'>

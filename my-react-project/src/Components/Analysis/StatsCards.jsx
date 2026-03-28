@@ -3,6 +3,13 @@ import { LuCalendarDays } from "react-icons/lu";
 import { FiClock, FiTrendingUp } from "react-icons/fi";
 import { BiStats } from "react-icons/bi";
 
+/**
+ * Renderar fyra mindre informationskort med nyckeltal.
+ * @component
+ * @param {Object} props
+ * @param {Object} props.stats - Innehåller bestDay, peakTime, avgSession och totalHours.
+ */
+
 const StatsCards = ({ stats }) => {
   return (
     <div className='analsysis-small-cards-stats'>

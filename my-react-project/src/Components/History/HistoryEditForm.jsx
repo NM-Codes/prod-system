@@ -1,5 +1,15 @@
 import Card from "../Cards/Cards";
 
+/**
+ * Formulärgränssnitt för att redigera existerande sessioner.
+ * @component
+ * @param {Object} props
+ * @param {Object} props.draft - En kopia av sessionen med pågående ändringar.
+ * @param {Function} props.setDraft - Funktion för att uppdatera draft-objektet.
+ * @param {Function} props.onSave - Sparar ändringarna permanent.
+ * @param {Function} props.onCancel - Avbryter redigeringen utan att spara.
+ */
+
 const HistoryEditForm = ({ draft, setDraft, onSave, onCancel }) => {
   return (
     <div className="edit-section-container">

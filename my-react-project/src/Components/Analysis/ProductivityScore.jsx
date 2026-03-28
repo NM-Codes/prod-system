@@ -3,6 +3,15 @@ import { PiMedal } from "react-icons/pi";
 import { FaFireFlameCurved } from "react-icons/fa6";
 import { BsLightningCharge } from "react-icons/bs";
 
+/**
+ * Visar användarens totala produktivitetspoäng i en cirkulär design.
+ * @component
+ * @param {Object} props
+ * @param {Object} props.stats - Innehåller prodScore, totalSessions och avgEnergy.
+ * @param {string} props.theme - Nuvarande tema (light/dark).
+ * @param {boolean} props.isDark - För villkorlig styling av textfärger.
+ */
+
 const ProductivityScore = ({ stats, theme, isDark }) => {
   return (
     <Card style={{

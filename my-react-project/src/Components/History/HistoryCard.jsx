@@ -3,6 +3,17 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { GoClock } from "react-icons/go";
 
+/**
+ * Renderar ett enskilt sessionskort med detaljerad information och åtgärder.
+ * @component
+ * @param {Object} props
+ * @param {Object} props.s - Det specifika sessionsobjektet som ska visas.
+ * @param {string|number} props.editingId - ID för den session som för närvarande redigeras.
+ * @param {string} props.timeFormat - Format för tidsvisning (t.ex. "12h" eller "24h").
+ * @param {Function} props.onEdit - Triggar redigeringsläge för denna session.
+ * @param {Function} props.onDelete - Triggar radering av denna session.
+ */
+
 const HistoryCard = ({ s, editingId, timeFormat, onEdit, onDelete }) => {
   
   const getCategoryIcon = (category) => {
