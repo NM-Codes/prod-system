@@ -9,6 +9,14 @@ import AnalysisCharts from './AnalysisCharts';
 import AnalysisInsights from './AnalysisInsights';
 import AnalysisEmptyState from './AnalysisEmptyState'; 
 
+/**
+ * Huvudvy för analys. Beräknar all statistik (grafer, snittvärden, poäng) 
+ * baserat på användarens sessionshistorik.
+ * @component
+ * @param {Object} props
+ * @param {Array<Object>} props.sessions - Array med sessioner som ska analyseras.
+ */
+
 //Vi hämtar in sessions från worksession och finns ej pass har vi en fallback till en tom array för att undvika en krasch
 //Hämtar hooken: Vi ropar på useTheme() för att fråga appen: "Vilket läge är vi i nu?
 //Om användaren har klickat på "Dark Mode", så blir isDark sant annars är light mode sant

@@ -3,6 +3,16 @@ import { GoSearch } from "react-icons/go";
 import { FiFilter } from "react-icons/fi";
 import { useTheme } from '../../Contexts/ThemeContext';
 
+/**
+ * Komponent för sökning och filtrering av historiklistan.
+ * @component
+ * @param {Object} props
+ * @param {string} props.searchTerm - Den aktuella söksträngen.
+ * @param {Function} props.onSearchChange - Callback när söksträngen ändras.
+ * @param {string} props.selectedCategory - Den valda kategorin från dropdown-menyn.
+ * @param {Function} props.onCategoryChange - Callback när en ny kategori väljs.
+ */
+
 const HistoryFilter = ({ searchTerm, onSearchChange, selectedCategory, onCategoryChange }) => {
   const { theme } = useTheme();
 

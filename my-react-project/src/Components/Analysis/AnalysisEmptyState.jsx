@@ -1,6 +1,13 @@
 import Card from '../Cards/Cards';
 import { PiWarningCircle } from "react-icons/pi";
 
+/**
+ * Renderar ett meddelande och en ikon när det saknas sessionsdata för analys.
+ * Används som fallback i huvudkomponenten Analysis.
+ * @component
+ * @returns {JSX.Element} Ett kort med varningsikon och instruktionstext.
+ */
+
 const AnalysisEmptyState = () => {
   return (
     <Card>

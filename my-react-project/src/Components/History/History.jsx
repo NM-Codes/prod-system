@@ -4,6 +4,15 @@ import HistoryFilter from "./HistoryFilter";
 import HistoryEmptyState from "./EmptyHistoryState";
 import './History.css';
 
+/**
+ * Renderar historiksidan och hanterar filtrering av arbetspass.
+ * @component
+ * @param {Object} props
+ * @param {Array<Object>} props.sessions - En lista med session-objekt från databasen/state.
+ * @param {Function} props.onEdit - Funktion som anropas när en användare vill ändra en session.
+ * @param {Function} props.onDelete - Funktion som tar ett ID för att radera en session.
+ */
+
 function History({ sessions, onEdit, onDelete }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Alla lägen");
